@@ -71,7 +71,7 @@ func (h *Handler) Handle(w http.ResponseWriter, r *http.Request) {
         httpx.ErrorCtx(r.Context(), w, err)
         return
     }
-    
+
     l := logic.NewLogic(r.Context(), h.svcCtx)
     resp, err := l.Process(&req)
     // ...

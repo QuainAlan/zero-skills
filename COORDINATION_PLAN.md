@@ -71,7 +71,7 @@ See [AI Ecosystem Guide](articles/ai-ecosystem-guide.md) for details.
 // 在 main.go 中添加
 func getZeroSkillsResources() []map[string]interface{} {
     baseURL := "https://raw.githubusercontent.com/zeromicro/zero-skills/main/"
-    
+
     return []map[string]interface{}{
         {
             "uri":         "zero-skills://patterns/rest-api",
@@ -213,9 +213,9 @@ examples/
 
 ### Week 1（立即）
 - [x] 创建 zero-skills 仓库并发布
-- [ ] ai-context 添加 zero-skills 引用
-- [ ] zero-skills 添加中文 README
-- [ ] 三个项目互相链接
+- [x] ai-context 添加 zero-skills 引用
+- [x] zero-skills 添加中文 README
+- [x] 三个项目互相链接
 
 ### Week 2
 - [ ] mcp-zero 实现 zero-skills 资源访问
