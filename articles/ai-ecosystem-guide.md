@@ -164,18 +164,49 @@ AI 助手：
 
 ### 配置 GitHub Copilot
 
-1. 在项目根目录创建 `.github/copilot-instructions.md`
-2. 复制 ai-context 内容
-3. 开始编码，Copilot 会遵循 go-zero 规范
+```bash
+# 添加 ai-context 作为 submodule
+git submodule add https://github.com/zeromicro/ai-context.git .github/ai-context
+
+# 创建符号链接（macOS/Linux）
+ln -s ai-context/00-instructions.md .github/copilot-instructions.md
+
+# Windows 用户使用
+mklink .github\copilot-instructions.md .github\ai-context\00-instructions.md
+
+# 更新到最新版本
+git submodule update --remote .github/ai-context
+```
+
+**为什么使用 submodule？**
+- ✅ 自动跟踪上游更新
+- ✅ 保持与官方同步
+- ✅ 简化版本管理
+- ✅ 一条命令即可更新
+
+### 配置 Cursor
 
 ```bash
-# 克隆 ai-context
-git clone https://github.com/zeromicro/ai-context.git
+# 添加 ai-context 作为 submodule
+git submodule add https://github.com/zeromicro/ai-context.git .cursorrules
 
-# 复制到项目
-mkdir -p .github
-cp ai-context/*.md .github/
+# 更新到最新版本
+git submodule update --remote .cursorrules
 ```
+
+Cursor 会自动读取 `.cursorrules` 目录下的所有 `.md` 文件作为项目规则。
+
+### 配置 Windsurf (Codeium)
+
+```bash
+# 添加 ai-context 作为 submodule
+git submodule add https://github.com/zeromicro/ai-context.git .windsurfrules
+
+# 更新到最新版本
+git submodule update --remote .windsurfrules
+```
+
+Windsurf 会自动读取 `.windsurfrules` 目录下的所有 `.md` 文件作为项目规则。
 
 ### 配置 Claude Desktop + mcp-zero
 
