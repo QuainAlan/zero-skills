@@ -32,7 +32,8 @@ zero-skills/
 │   └── resilience-patterns.md  # 弹性和容错
 ├── best-practices/             # 生产级建议
 ├── troubleshooting/            # 常见问题和解决方案
-├── articles/                   # 深度指南
+├── getting-started/            # 入门指南
+│   └── claude-code-guide.md   # 使用 zero-skills 与 Claude Code
 └── examples/                   # 演示项目和验证脚本
 ```
 
@@ -45,9 +46,19 @@ zero-skills/
 ### 在其他 AI 助手中使用
 
 在 AI 上下文中引用这个 skill：
-1. **GitHub Copilot**：使用 [ai-context](https://github.com/zeromicro/ai-context)，它会链接到这个 skill
-2. **Cursor/Windsurf**：作为项目规则添加（参见 [AI 生态指南](articles/ai-ecosystem-guide.md)）
+1. **GitHub Copilot**：使用 [ai-context](https://github.com/zeromicro/ai-context)
+2. **Cursor/Windsurf**：添加为项目规则
 3. **API 使用**：在提示词中包含 `references/` 中的相关模式文件
+
+## 与 go-zero AI 生态集成
+
+zero-skills 是 go-zero AI 工具生态的一部分：
+
+- **[ai-context](https://github.com/zeromicro/ai-context)** - GitHub Copilot 的简洁指令
+- **zero-skills**（本仓库）- 所有 AI 助手的详细知识库
+- **[mcp-zero](https://github.com/zeromicro/mcp-zero)** - Claude Desktop 的运行时工具
+
+详细说明参见：[Claude Code 使用指南](getting-started/claude-code-guide.md)
 
 ## 特色功能
 
@@ -103,7 +114,7 @@ zero-skills       → 详细的知识库（给所有 AI 助手）
 mcp-zero          → 运行时工具调用（给 Claude Desktop）
 ```
 
-详细说明参见：[go-zero AI 工具生态指南](articles/ai-ecosystem-guide.md)
+详细说明参见：[Claude Code 使用指南](getting-started/claude-code-guide.md)
 
 ## 内容示例
 

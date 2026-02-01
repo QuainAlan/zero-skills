@@ -1,182 +1,249 @@
 ---
 name: zero-skills
-description: Comprehensive knowledge base for go-zero microservices framework. Use this skill when working with go-zero to understand correct patterns for REST APIs (Handler/Logic/Context architecture), RPC services (service discovery, load balancing), database operations (sqlx, MongoDB, caching), resilience patterns (circuit breaker, rate limiting), and troubleshooting common issues. Essential for generating production-ready go-zero code that follows framework conventions.
-license: Apache-2.0
+description: |
+  Comprehensive knowledge base for go-zero microservices framework.
+
+  **Use this skill when:**
+  - Building REST APIs with go-zero (Handler → Logic → Model architecture)
+  - Creating RPC services with service discovery and load balancing
+  - Implementing database operations with sqlx, MongoDB, or Redis caching
+  - Adding resilience patterns (circuit breaker, rate limiting, load shedding)
+  - Troubleshooting go-zero issues or understanding framework conventions
+  - Generating production-ready microservices code
+
+  **Features:**
+  - Complete pattern guides with ✅ correct and ❌ incorrect examples
+  - Three-layer architecture enforcement
+  - Production best practices
+  - Common pitfall solutions
+allowed-tools:
+  - Read
+  - Grep
+  - Glob
 ---
 
 # go-zero Skills for AI Agents
 
-Structured knowledge base optimized for AI agents to help developers work effectively with the [go-zero](https://github.com/zeromicro/go-zero) microservices framework.
+This skill provides comprehensive go-zero microservices framework knowledge, optimized for AI agents helping developers build production-ready services. It covers REST APIs, RPC services, database operations, resilience patterns, and troubleshooting.
 
-## Overview
+## 🎯 When to Use This Skill
 
-This skill provides AI agents with comprehensive go-zero knowledge to:
-- Generate accurate code following go-zero conventions
-- Understand the three-layer architecture (Handler → Logic → Model)
-- Apply best practices for microservices development
-- Troubleshoot common issues efficiently
-- Build production-ready applications
+Invoke this skill when working with go-zero:
+- **Creating services**: REST APIs, gRPC services, or microservices architectures
+- **Database integration**: SQL, MongoDB, Redis, or connection pooling
+- **Production hardening**: Circuit breakers, rate limiting, or error handling
+- **Debugging**: Understanding errors, fixing configuration, or resolving issues
+- **Learning**: Understanding go-zero patterns and best practices
 
-## Quick Start
+## 📚 Knowledge Structure
 
-When helping with go-zero development:
+This skill organizes go-zero knowledge into focused modules. Load specific guides as needed rather than reading everything at once:
 
-1. **For new projects**: Start with [getting-started/quick-start.md](getting-started/quick-start.md)
-2. **For specific patterns**: Reference the appropriate pattern guide
-3. **For issues**: Check [troubleshooting/common-issues.md](troubleshooting/common-issues.md)
-4. **For best practices**: See [best-practices/overview.md](best-practices/overview.md)
+## 📚 Knowledge Structure
 
-## Core Patterns
+This skill organizes go-zero knowledge into focused modules. **Load specific guides as needed** rather than reading everything at once:
 
-### REST API Development
-Reference: [references/rest-api-patterns.md](references/rest-api-patterns.md)
+### Quick Start Guide
+**Link**: [Official go-zero Documentation](https://go-zero.dev/docs/quick-start)
+**Contains**: Installation, first API service, basic commands, hello-world examples (refer to official docs)
 
-- Handler/Logic/Context three-layer architecture
-- Request validation and error handling
-- Middleware implementation (auth, logging, metrics)
-- Response formatting with httpx
-- Complete CRUD examples with ✅ correct and ❌ incorrect patterns
+### Pattern Guides (Detailed Reference)
 
-**When to use**: Creating or modifying REST API services, implementing HTTP endpoints
+#### 1. REST API Patterns
+**File**: [references/rest-api-patterns.md](references/rest-api-patterns.md)
+**When to load**: Creating HTTP endpoints, implementing CRUD operations, adding middleware
+**Contains**:
+- Handler → Logic → Context three-layer architecture
+- Request/response handling with proper types
+- Middleware (auth, logging, metrics, CORS)
+- Error handling with `httpx.Error()` and `httpx.OkJson()`
+- Complete CRUD examples with ✅ correct vs ❌ incorrect patterns
 
-### RPC Services
-Reference: [references/rpc-patterns.md](references/rpc-patterns.md)
-
-- Protocol Buffers definitions and code generation
-- Service discovery with etcd/consul
+#### 2. RPC Service Patterns
+**File**: [references/rpc-patterns.md](references/rpc-patterns.md)
+**When to load**: Building gRPC services, service-to-service communication
+**Contains**:
+- Protocol Buffers definition and code generation
+- Service discovery with etcd/consul/kubernetes
 - Load balancing strategies
-- Error handling and timeout configuration
-- Client-server communication patterns
+- Client configuration and interceptors
+- Error handling in RPC contexts
 
-**When to use**: Building gRPC services, implementing service-to-service communication
-
-### Database Operations
-Reference: [references/database-patterns.md](references/database-patterns.md)
-
-- SQL operations with sqlx (CRUD, transactions, batch operations)
+#### 3. Database Patterns
+**File**: [references/database-patterns.md](references/database-patterns.md)
+**When to load**: Implementing data persistence, caching, or complex queries
+**Contains**:
+- SQL operations with sqlx (CRUD, transactions, batch inserts)
 - MongoDB integration patterns
-- Redis caching strategies
-- Connection pooling and performance optimization
-- Model generation with goctl
+- Redis caching strategies and cache-aside pattern
+- Model generation with `goctl model`
+- Connection pooling and performance tuning
 
-**When to use**: Implementing data persistence, caching, or database queries
-
-### Resilience Patterns
-Reference: [references/resilience-patterns.md](references/resilience-patterns.md)
-
-- Circuit breaker configuration
-- Rate limiting and throttling
-- Load shedding under high load
+#### 4. Resilience Patterns
+**File**: [references/resilience-patterns.md](references/resilience-patterns.md)
+**When to load**: Production hardening, handling failures, managing system load
+**Contains**:
+- Circuit breaker configuration (Breaker)
+- Rate limiting and API throttling
+- Load shedding under pressure
 - Timeout and retry strategies
-- Graceful degradation
+- Graceful shutdown and degradation
 
-**When to use**: Ensuring service reliability, handling failures, managing system load
+### Supporting Resources
 
-## Integration with AI Tools
+#### Best Practices
+**File**: [best-practices/overview.md](best-practices/overview.md)
+**When to load**: Production deployment, code review, optimization
+**Contains**: Configuration management, logging, monitoring, security, performance
 
-This skill works seamlessly with the go-zero AI ecosystem:
+#### Troubleshooting
+**File**: [troubleshooting/common-issues.md](troubleshooting/common-issues.md)
+**When to load**: Debugging errors, configuration issues, runtime problems
+**Contains**: Common error messages, solutions, configuration pitfalls, debugging tips
 
-- **[ai-context](https://github.com/zeromicro/ai-context)**: Concise instructions for GitHub Copilot, Cursor, Windsurf
-- **[mcp-zero](https://github.com/zeromicro/mcp-zero)**: Runtime tools for Claude Desktop/Code (goctl integration)
-
-See [articles/ai-ecosystem-guide.md](articles/ai-ecosystem-guide.md) for complete integration guide.
-
-## Project Structure
-
-```
-zero-skills/
-├── SKILL.md                    # This file - skill entry point
-├── getting-started/            # Quick start guides
-│   └── quick-start.md
-├── references/                 # Detailed pattern documentation
-│   ├── rest-api-patterns.md
-│   ├── rpc-patterns.md
-│   ├── database-patterns.md
-│   └── resilience-patterns.md
-├── best-practices/             # Production recommendations
-│   └── overview.md
-├── troubleshooting/            # Common issues and solutions
-│   └── common-issues.md
-├── articles/                   # In-depth guides
+#### Claude Code Integration
+**File**: [getting-started/claude-code-guide.md](getting-started/claude-code-guide.md)
+**When to load**: Setting up Claude Code for zero-skills usage
+**Contains**: Installation, invocation methods, advanced features (subagents, dynamic context)
 │   └── ai-ecosystem-guide.md
 └── examples/                   # Demo projects and scripts
     ├── verify-tutorial.sh
     └── demo-project/
 ```
 
-## Common Workflows
+## 🚀 Common Workflows
+
+These workflows guide you through typical go-zero development tasks:
 
 ### Creating a New REST API Service
 
-1. Define API specification in `.api` file
-2. Generate code with `goctl api go -api user.api -dir .`
-3. Implement business logic in `logic` layer
-4. Add validation and error handling
-5. Test with httpx utilities
+**Steps:**
+1. Define API specification in `.api` file with types and routes
+2. Generate code: `goctl api go -api user.api -dir .`
+3. Implement business logic in `internal/logic/` layer
+4. Add validation and error handling with `httpx`
+5. Test endpoints with proper request/response handling
 
-See complete workflow in [references/rest-api-patterns.md](references/rest-api-patterns.md)
+**Detailed guide**: [references/rest-api-patterns.md](references/rest-api-patterns.md#complete-rest-api-workflow)
 
 ### Implementing Database Operations
 
-1. Design database schema
-2. Generate model with `goctl model mysql datasource`
-3. Inject model into ServiceContext
-4. Use sqlx for queries in logic layer
-5. Handle transactions and errors properly
+**Steps:**
+1. Design database schema and create tables
+2. Generate model: `goctl model mysql datasource -url="..." -table="users" -dir="./model"`
+3. Inject model into ServiceContext in `internal/svc/service_context.go`
+4. Use sqlx methods in logic layer (`Insert`, `FindOne`, `Update`, `Delete`)
+5. Handle transactions and errors properly with `ctx` propagation
 
-See complete patterns in [references/database-patterns.md](references/database-patterns.md)
+**Detailed guide**: [references/database-patterns.md](references/database-patterns.md#crud-operations)
 
 ### Adding Middleware
 
-1. Create middleware function in `internal/middleware/`
-2. Register in route configuration
+**Steps:**
+1. Create middleware function in `internal/middleware/` directory
+2. Define middleware in `.api` file or register programmatically
 3. Implement authentication/authorization logic
-4. Pass data through request context
-5. Handle errors appropriately
+4. Pass validated data through `r.Context()`
+5. Handle errors with appropriate HTTP status codes
 
-See middleware patterns in [references/rest-api-patterns.md#middleware](references/rest-api-patterns.md)
+**Detailed guide**: [references/rest-api-patterns.md](references/rest-api-patterns.md#middleware-patterns)
 
-## Key Principles
+### Building an RPC Service
+
+**Steps:**
+1. Define service in `.proto` file with messages and RPCs
+2. Generate code: `goctl rpc protoc user.proto --go_out=. --go-grpc_out=. --zrpc_out=.`
+3. Implement service logic in `internal/logic/`
+4. Configure service discovery (etcd/consul/kubernetes)
+5. Test with RPC client and handle errors
+
+**Detailed guide**: [references/rpc-patterns.md](references/rpc-patterns.md#complete-rpc-workflow)
+
+## ⚡ Key Principles
+
+When generating or reviewing go-zero code, always apply these principles:
 
 ### ✅ Always Follow
 
-- **Three-layer architecture**: Handler → Logic → Model separation
-- **Error handling**: Use structured errors, not `fmt.Errorf` in APIs
-- **Configuration**: Load config with `conf.MustLoad`
-- **Context propagation**: Pass `ctx` through all layers
-- **Type safety**: Define types in `.api` files, generate with goctl
+- **Three-layer separation**: Keep Handler (routing) → Logic (business) → Model (data) distinct
+- **Structured errors**: Use `httpx.Error(w, err)` for HTTP errors, not `fmt.Errorf`
+- **Configuration**: Load with `conf.MustLoad(&c, *configFile)` and inject via ServiceContext
+- **Context propagation**: Pass `ctx context.Context` through all layers for tracing and cancellation
+- **Type safety**: Define request/response types in `.api` files, generate with goctl
+- **goctl generation**: Always use `goctl` to generate boilerplate, never hand-write handlers/routes
 
 ### ❌ Never Do
 
-- Put business logic in handlers
-- Ignore errors or use bare `fmt.Errorf` for HTTP errors
-- Hard-code configuration values
-- Skip validation of user inputs
-- Bypass the three-layer architecture
+- Put business logic directly in handlers (violates three-layer architecture)
+- Return raw errors with `w.Write()` or `fmt.Fprintf()` instead of using httpx helpers
+- Hard-code configuration values (ports, hosts, database credentials)
+- Skip validation of user inputs or forget to check `err != nil`
+- Modify generated code (customize via `logic` layer instead)
+- Bypass ServiceContext injection (leads to tight coupling and testing issues)
 
-## Progressive Learning
+## 📖 Progressive Learning Path
 
-**New to go-zero?**
-1. Start with [getting-started/quick-start.md](getting-started/quick-start.md)
-2. Build a simple REST API using [references/rest-api-patterns.md](references/rest-api-patterns.md)
-3. Add database operations from [references/database-patterns.md](references/database-patterns.md)
+Follow this path based on your needs:
 
-**Building production services?**
-1. Review [best-practices/overview.md](best-practices/overview.md)
-2. Implement resilience patterns from [references/resilience-patterns.md](references/resilience-patterns.md)
-3. Reference [troubleshooting/common-issues.md](troubleshooting/common-issues.md) for common pitfalls
+### 🟢 New to go-zero?
 
-**Extending capabilities?**
-1. Check [articles/ai-ecosystem-guide.md](articles/ai-ecosystem-guide.md)
-2. Use [examples/demo-project/](examples/demo-project/) to test configurations
-3. Run [examples/verify-tutorial.sh](examples/verify-tutorial.sh) to validate setup
+1. **Start here**: [Official go-zero Quick Start](https://go-zero.dev/docs/quick-start)
+   Install go-zero, create your first API, understand basic concepts
 
-## Resources
+   Connect to MySQL/PostgreSQL, generate models, implement CRUD
 
-- **Official documentation**: [go-zero.dev](https://go-zero.dev)
-- **GitHub repository**: [zeromicro/go-zero](https://github.com/zeromicro/go-zero)
-- **Community**: Join go-zero developer community (see main repo README)
+### 🟡 Building production services?
 
-## Version Compatibility
+1. **Review best practices**: [best-practices/overview.md](best-practices/overview.md)
+   Configuration, logging, monitoring, security checklist
 
-This skill targets go-zero 1.5+. Patterns are updated regularly to reflect framework evolution. Always check official documentation for the latest API changes.
+2. **Add resilience**: [references/resilience-patterns.md](references/resilience-patterns.md)
+   Circuit breakers, rate limiting, graceful degradation
+
+3. **Check common pitfalls**: [troubleshooting/common-issues.md](troubleshooting/common-issues.md)
+   Avoid typical mistakes and know how to debug issues
+
+### 🔵 Extending capabilities?
+
+1. **Use with Claude Code**: [getting-started/claude-code-guide.md](getting-started/claude-code-guide.md)
+   Learn advanced features like subagents, dynamic context, and argument passing
+   Run demo projects to validate your environment
+
+3. **Verify knowledge**: [examples/verify-tutorial.sh](examples/verify-tutorial.sh)
+   Script to check if examples work correctly
+
+## 🔗 Integration with go-zero AI Ecosystem
+
+This skill is part of a three-tool ecosystem for AI-assisted go-zero development:
+
+| Tool | Purpose | Best For |
+|------|---------|----------|
+| **[ai-context](https://github.com/zeromicro/ai-context)** | Concise workflow instructions (~5KB) | GitHub Copilot, Cursor, Windsurf |
+| **zero-skills** (this repo) | Comprehensive knowledge base (~40KB) | Claude Code, deep learning, reference |
+| **[mcp-zero](https://github.com/zeromicro/mcp-zero)** | Runtime tools (execute goctl commands) | Claude Desktop/Code for code generation |
+
+**Usage in Claude Code:**
+- This skill loads automatically when working with go-zero projects
+- Use `/zero-skills` to invoke manually for go-zero guidance
+- Combine with mcp-zero tools for automatic code generation
+- Reference specific pattern files when needed (Claude loads them on demand)
+
+See [getting-started/claude-code-guide.md](getting-started/claude-code-guide.md) for detailed usage instructions.
+
+## 🌐 Additional Resources
+
+- **Official docs**: [go-zero.dev](https://go-zero.dev) - Latest API reference and guides
+- **GitHub**: [zeromicro/go-zero](https://github.com/zeromicro/go-zero) - Source code and examples
+- **Community**: Discussions, issues, and contributions welcome in the main repository
+
+## 📝 Version Compatibility
+
+- **Target version**: go-zero 1.5+
+- **Go version**: Go 1.19 or later recommended
+- **Updates**: Patterns updated regularly to reflect framework evolution
+- **Breaking changes**: Check official docs for API changes between versions
+
+---
+
+**Quick invocation**: Use `/zero-skills` or ask "How do I [task] with go-zero?"
+**Need help?** Reference the specific pattern guide for detailed examples and explanations.

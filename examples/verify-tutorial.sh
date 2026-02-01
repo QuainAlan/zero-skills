@@ -293,9 +293,17 @@ main() {
     echo "详细结果保存在: $RESULTS_FILE"
     echo "测试目录: $DEMO_DIR"
     echo ""
-    echo -e "${YELLOW}提示: 测试完成后可以删除测试目录${NC}"
-    echo -e "${YELLOW}Tip: You can delete the test directory after verification${NC}"
-    echo "rm -rf $DEMO_DIR"
+
+    # 自动清理临时目录
+    echo "正在清理临时测试目录..."
+    echo "Cleaning up temporary test directory..."
+    if rm -rf "$DEMO_DIR" 2>/dev/null; then
+        echo -e "${GREEN}✓ 临时目录已清理${NC}"
+        echo -e "${GREEN}✓ Temporary directory cleaned up${NC}"
+    else
+        echo -e "${YELLOW}⚠ 无法自动清理，请手动删除:${NC} rm -rf $DEMO_DIR"
+        echo -e "${YELLOW}⚠ Auto-cleanup failed, please delete manually:${NC} rm -rf $DEMO_DIR"
+    fi
     echo ""
 }
 

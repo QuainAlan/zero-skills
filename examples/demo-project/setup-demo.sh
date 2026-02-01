@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# 设置演示项目脚本
 # Demo project setup script for testing GitHub Copilot with go-zero
 
 set -e
@@ -8,84 +7,83 @@ set -e
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
+RED='\033[0;31m'
 NC='\033[0m'
 
 PROJECT_NAME="userapidemo"
 DEMO_DIR="$(pwd)/demo-workspace"
 
 echo -e "${BLUE}================================================${NC}"
-echo -e "${BLUE}go-zero AI 工具生态演示项目${NC}"
-echo -e "${BLUE}Demo Project for go-zero AI Ecosystem${NC}"
+echo -e "${BLUE}go-zero AI Ecosystem Demo Project Setup${NC}"
 echo -e "${BLUE}================================================${NC}"
 echo ""
 
-# 检查依赖
-echo "检查依赖..."
+# Check dependencies
+echo "Checking dependencies..."
 if ! command -v go &> /dev/null; then
-    echo -e "${YELLOW}警告: Go 未安装，请先安装 Go${NC}"
+    echo -e "${RED}Error: Go is not installed. Please install Go first.${NC}"
     exit 1
 fi
 
 if ! command -v goctl &> /dev/null; then
-    echo -e "${YELLOW}警告: goctl 未安装，正在安装...${NC}"
+    echo -e "${YELLOW}Warning: goctl not installed, installing...${NC}"
     go install github.com/zeromicro/go-zero/tools/goctl@latest
 fi
 
-echo -e "${GREEN}✓ 依赖检查完成${NC}"
+echo -e "${GREEN}✓ Dependencies check completed${NC}"
 echo ""
 
-# 创建演示目录
-echo "创建演示项目目录: $DEMO_DIR/$PROJECT_NAME"
+# Create demo directory
+echo "Creating demo project directory: $DEMO_DIR"
 mkdir -p "$DEMO_DIR"
 cd "$DEMO_DIR"
 
-# 初始化 git 仓库
+# Initialize git repository
 if [ ! -d ".git" ]; then
     git init -q
-    echo -e "${GREEN}✓ 初始化 Git 仓库${NC}"
+    echo -e "${GREEN}✓ Git repository initialized${NC}"
 fi
 
-# 配置 GitHub Copilot（添加 ai-context）
+# Configure GitHub Copilot (add ai-context)
 echo ""
-echo "配置 GitHub Copilot..."
+echo "Configuring GitHub Copilot..."
 if [ ! -d ".github/ai-context" ]; then
     git submodule add -q https://github.com/zeromicro/ai-context.git .github/ai-context 2>/dev/null || echo "Submodule already exists"
     mkdir -p .github
     ln -sf ai-context/00-instructions.md .github/copilot-instructions.md
-    echo -e "${GREEN}✓ GitHub Copilot 配置完成${NC}"
+    echo -e "${GREEN}✓ GitHub Copilot configured${NC}"
     echo -e "  - Submodule: .github/ai-context"
     echo -e "  - Instructions: .github/copilot-instructions.md"
 else
-    echo -e "${YELLOW}⚠ GitHub Copilot 已配置${NC}"
+    echo -e "${YELLOW}⚠ GitHub Copilot already configured${NC}"
 fi
 
-# 使用 goctl 创建基础项目结构
+# Create project structure
 echo ""
-echo "创建 go-zero API 项目: $PROJECT_NAME"
-if [ ! -d "$PROJECT_NAME" ]; then
-    goctl api new $PROJECT_NAME
-    echo -e "${GREEN}✓ 项目创建完成${NC}"
-else
-    echo -e "${YELLOW}⚠ 项目已存在${NC}"
+echo "Creating go-zero API project structure..."
+if [ -d "$PROJECT_NAME" ]; then
+    echo -e "${YELLOW}⚠ Project exists, removing and recreating...${NC}"
+    rm -rf "$PROJECT_NAME"
 fi
 
-cd $PROJECT_NAME
+mkdir -p "$PROJECT_NAME"
+cd "$PROJECT_NAME"
 
-# 创建示例 API 定义文件
+# Create API definition file
 echo ""
-echo "创建示例 API 定义..."
+echo "Creating API definition file..."
 cat > user.api << 'EOF'
 syntax = "v1"
 
 info (
-	title: "用户服务 API"
-	desc: "用户管理相关接口"
-	author: "go-zero"
+	title:   "User Service API"
+	desc:    "User management API"
+	author:  "go-zero"
 	version: "1.0"
 )
 
 type (
-	// 用户信息
+	// User information
 	User {
 		Id       int64  `json:"id"`
 		Username string `json:"username"`
@@ -93,35 +91,35 @@ type (
 		CreateAt string `json:"create_at"`
 	}
 
-	// 创建用户请求
+	// Create user request
 	CreateUserRequest {
 		Username string `json:"username"`
 		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
 
-	// 创建用户响应
+	// Create user response
 	CreateUserResponse {
 		User User `json:"user"`
 	}
 
-	// 获取用户请求
+	// Get user request
 	GetUserRequest {
 		Id int64 `path:"id"`
 	}
 
-	// 获取用户响应
+	// Get user response
 	GetUserResponse {
 		User User `json:"user"`
 	}
 
-	// 用户列表请求
+	// List users request
 	ListUsersRequest {
 		Page     int `form:"page,default=1"`
 		PageSize int `form:"page_size,default=10"`
 	}
 
-	// 用户列表响应
+	// List users response
 	ListUsersResponse {
 		Users []User `json:"users"`
 		Total int64  `json:"total"`
@@ -129,220 +127,264 @@ type (
 )
 
 service user-api {
-	@doc "创建用户"
+	@doc "Create user"
 	@handler CreateUser
 	post /api/users (CreateUserRequest) returns (CreateUserResponse)
 
-	@doc "获取用户详情"
+	@doc "Get user details"
 	@handler GetUser
 	get /api/users/:id (GetUserRequest) returns (GetUserResponse)
 
-	@doc "获取用户列表"
+	@doc "List users"
 	@handler ListUsers
 	get /api/users (ListUsersRequest) returns (ListUsersResponse)
 }
 EOF
 
-echo -e "${GREEN}✓ API 定义文件创建完成: user.api${NC}"
+echo -e "${GREEN}✓ API definition file created: user.api${NC}"
 
-# 生成代码
+# Generate code
 echo ""
-echo "生成 go-zero 代码..."
+echo "Generating go-zero code..."
 goctl api go -api user.api -dir . -style go_zero
 
-echo -e "${GREEN}✓ 代码生成完成${NC}"
+echo -e "${GREEN}✓ Code generation completed${NC}"
 
-# 创建 README 说明
+# Initialize go module
+echo ""
+echo "Initializing Go module..."
+if [ ! -f "go.mod" ]; then
+    go mod init $PROJECT_NAME
+fi
+go mod tidy
+
+echo -e "${GREEN}✓ Go module initialized${NC}"
+
+# Create .gitignore
+cat > .gitignore << 'EOF'
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+userapidemo
+
+# Go workspace
+go.work
+go.work.sum
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+EOF
+
+echo -e "${GREEN}✓ .gitignore created${NC}"
+
+# Build project to verify
+echo ""
+echo "Building project to verify..."
+if go build -o userapidemo .; then
+    echo -e "${GREEN}✓ Build successful${NC}"
+    rm -f userapidemo  # Clean up binary
+else
+    echo -e "${RED}✗ Build failed${NC}"
+    exit 1
+fi
+
+# Create README
 cat > README.md << 'EOF'
 # User API Demo - go-zero with GitHub Copilot
 
-这是一个使用 GitHub Copilot + ai-context 配置的 go-zero 演示项目。
+This is a go-zero demo project configured with GitHub Copilot + ai-context.
 
-## 项目结构
+## Project Structure
 
 ```
-user-api-demo/
-├── etc/              # 配置文件
+userapidemo/
+├── etc/              # Configuration files
 ├── internal/
-│   ├── handler/      # HTTP 处理层
-│   ├── logic/        # 业务逻辑层
-│   ├── svc/          # 服务上下文
-│   └── types/        # 类型定义
-├── user.api          # API 定义文件
-└── userademo.go      # 主程序入口
+│   ├── handler/      # HTTP handlers
+│   ├── logic/        # Business logic
+│   ├── svc/          # Service context
+│   └── types/        # Type definitions
+├── user.api          # API definition file
+└── userapidemo.go    # Main entry point
 ```
 
-## 测试 GitHub Copilot
-
-1. 在 VS Code 中打开此项目
-2. GitHub Copilot 会自动读取 `.github/copilot-instructions.md`
-3. 尝试以下操作来测试 Copilot 的 go-zero 支持：
-
-### 测试场景 1: 实现 CreateUser Logic
-
-打开 `internal/logic/createuserlogic.go`，在 `CreateUser` 方法中输入注释：
-
-```go
-// TODO: 实现用户创建逻辑
-```
-
-Copilot 应该建议符合 go-zero 规范的代码，包括：
-- 参数验证
-- 错误处理使用 `errorx`
-- 返回符合 types 定义的结构
-
-### 测试场景 2: 添加数据库 Model
-
-在项目根目录创建注释：
-
-```go
-// TODO: 添加 MySQL 用户表 model
-```
-
-Copilot 应该建议：
-- 使用 goctl model 命令
-- 正确的表结构定义
-- sqlx 的使用方式
-
-### 测试场景 3: 添加中间件
-
-创建新文件 `internal/middleware/auth.go`，输入：
-
-```go
-// TODO: 实现 JWT 认证中间件
-```
-
-Copilot 应该建议：
-- 符合 go-zero 中间件模式的代码
-- 正确的 JWT 验证逻辑
-- 上下文传递方式
-
-## 运行项目
+## Running the Service
 
 ```bash
-# 运行服务
-go run userademo.go
+# Run the service
+go run userapidemo.go -f etc/user-api.yaml
 
-# 测试 API
-curl http://localhost:8888/api/users
+# The service will start on http://localhost:8888
 ```
 
-## 验证 Copilot 配置
-
-检查 Copilot 是否正确加载了 ai-context：
+## Testing with curl
 
 ```bash
-# 查看配置文件
-cat ../.github/copilot-instructions.md
+# Create a user
+curl -X POST http://localhost:8888/api/users \
+  -H "Content-Type: application/json" \
+  -d '{"username":"john","email":"john@example.com","password":"secret"}'
 
-# 确认包含 go-zero 相关内容
-grep "go-zero" ../.github/copilot-instructions.md
+# Get user by ID
+curl http://localhost:8888/api/users/1
+
+# List users
+curl http://localhost:8888/api/users?page=1&page_size=10
 ```
 
-## 预期效果
+## Testing GitHub Copilot
 
-使用配置了 ai-context 的 GitHub Copilot：
-- ✅ 代码建议遵循 go-zero 三层架构
-- ✅ 错误处理使用 errorx
-- ✅ 使用正确的 context 传递方式
-- ✅ HTTP 响应使用 httpx.OkJson/Error
-- ✅ 配置加载使用 conf.MustLoad
+### Scenario 1: Implement CreateUser Logic
 
-没有 ai-context 的普通 Copilot：
-- ❌ 可能生成通用的 HTTP handler
-- ❌ 可能不遵循 Handler->Logic 分层
-- ❌ 错误处理可能使用 fmt.Errorf
-- ❌ 不了解 go-zero 特定的工具和模式
+1. Open `internal/logic/createuserlogic.go` in VS Code
+2. In the `CreateUser` method, try typing:
+```go
+// TODO: Validate username is not empty
+```
+
+3. **Expected behavior**:
+   - ✅ Copilot suggests go-zero error handling
+   - ✅ Uses proper error returns
+   - ✅ Follows Logic layer responsibilities
+   - ✅ Correctly uses `req` and `types` definitions
+
+### Scenario 2: Add Database Model
+
+1. Try creating a comment in the project:
+```go
+// TODO: Add MySQL user table model
+```
+
+2. **Expected behavior**:
+   - Copilot suggests using `goctl model` commands
+   - Suggests proper model structure
+   - Includes database connection in ServiceContext
+
+### Scenario 3: Add Middleware
+
+1. Create `internal/middleware/auth.go`
+2. Try typing:
+```go
+// TODO: JWT authentication middleware
+```
+
+3. **Expected behavior**:
+   - Copilot suggests middleware pattern
+   - Includes proper context handling
+   - Shows how to register in routes
+
+## Implementation Tips
+
+The business logic should be implemented in the `internal/logic/` directory:
+
+- **createuserlogic.go**: Validate input, create user, return response
+- **getuserlogic.go**: Fetch user by ID, handle not found
+- **listuserslogic.go**: Paginate users, return list with total count
+
+Use the Handler → Logic → Model three-layer architecture.
+
+## Resources
+
+- [go-zero Official Docs](https://go-zero.dev)
+- [zero-skills Pattern Guides](https://github.com/zeromicro/zero-skills)
+- [ai-context Instructions](https://github.com/zeromicro/ai-context)
 EOF
 
-echo -e "${GREEN}✓ README 创建完成${NC}"
+echo -e "${GREEN}✓ README.md created${NC}"
 
-# 初始化 Go module
-if [ ! -f "go.mod" ]; then
-    echo ""
-    echo "初始化 Go module..."
-    go mod init $PROJECT_NAME
-    go mod tidy
-    echo -e "${GREEN}✓ Go module 初始化完成${NC}"
-fi
+# Return to demo-workspace root
+cd "$DEMO_DIR"
 
-# 创建验证脚本
-cat > ../verify-copilot.sh << 'EOF'
+# Create verification script
+cat > verify-copilot.sh << 'EOF'
 #!/bin/bash
 
-# 验证 GitHub Copilot 配置
+# Verification script for GitHub Copilot configuration
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-echo "验证 GitHub Copilot 配置..."
+echo "Verifying GitHub Copilot configuration..."
 echo ""
 
-# 检查 1: submodule 存在
+# Check 1: ai-context submodule exists
 if [ -d ".github/ai-context" ]; then
-    echo -e "${GREEN}✓${NC} ai-context submodule 存在"
+    echo -e "${GREEN}✓${NC} ai-context submodule exists"
 else
-    echo -e "${RED}✗${NC} ai-context submodule 不存在"
+    echo -e "${RED}✗${NC} ai-context submodule does not exist"
     exit 1
 fi
 
-# 检查 2: 符号链接存在
+# Check 2: copilot-instructions.md symlink exists
 if [ -L ".github/copilot-instructions.md" ]; then
-    echo -e "${GREEN}✓${NC} copilot-instructions.md 符号链接存在"
+    echo -e "${GREEN}✓${NC} copilot-instructions.md symlink exists"
 else
-    echo -e "${RED}✗${NC} copilot-instructions.md 符号链接不存在"
+    echo -e "${RED}✗${NC} copilot-instructions.md symlink does not exist"
     exit 1
 fi
 
-# 检查 3: 文件内容包含 go-zero
+# Check 3: Configuration file contains go-zero content
 if grep -q "go-zero" .github/copilot-instructions.md; then
-    echo -e "${GREEN}✓${NC} 配置文件包含 go-zero 内容"
+    echo -e "${GREEN}✓${NC} Configuration file contains go-zero content"
 else
-    echo -e "${RED}✗${NC} 配置文件不包含 go-zero 内容"
+    echo -e "${RED}✗${NC} Configuration file does not contain go-zero content"
     exit 1
 fi
 
-# 检查 4: 项目结构
+# Check 4: Project structure is correct
 if [ -d "userapidemo/internal" ]; then
-    echo -e "${GREEN}✓${NC} go-zero 项目结构正确"
+    echo -e "${GREEN}✓${NC} go-zero project structure is correct"
 else
-    echo -e "${RED}✗${NC} go-zero 项目结构不正确"
+    echo -e "${RED}✗${NC} go-zero project structure is incorrect"
     exit 1
 fi
 
 echo ""
-echo -e "${GREEN}✓ 所有检查通过！${NC}"
+echo -e "${GREEN}✓ All checks passed!${NC}"
 echo ""
-echo "现在可以在 VS Code 中打开项目，GitHub Copilot 将使用 go-zero 上下文！"
+echo "You can now open the project in VS Code and GitHub Copilot will use go-zero context!"
 echo ""
-echo "  cd $(pwd)/user-api-demo"
+echo "  cd $(pwd)/userapidemo"
 echo "  code ."
 EOF
 
-chmod +x ../verify-copilot.sh
+chmod +x verify-copilot.sh
 
 echo ""
 echo -e "${BLUE}================================================${NC}"
-echo -e "${GREEN}✓ 演示项目设置完成！${NC}"
+echo -e "${GREEN}✓ Demo project setup completed!${NC}"
 echo -e "${BLUE}================================================${NC}"
 echo ""
-echo "项目位置: $DEMO_DIR/$PROJECT_NAME"
+echo "Project location: $DEMO_DIR/$PROJECT_NAME"
 echo ""
-echo "下一步操作："
+echo "Next steps:"
 echo ""
-echo "1. 验证配置："
+echo "1. Verify configuration:"
 echo -e "   ${YELLOW}cd $DEMO_DIR && ./verify-copilot.sh${NC}"
 echo ""
-echo "2. 在 VS Code 中打开项目："
+echo "2. Open project in VS Code:"
 echo -e "   ${YELLOW}cd $DEMO_DIR/$PROJECT_NAME${NC}"
 echo -e "   ${YELLOW}code .${NC}"
 echo ""
-echo "3. 测试 GitHub Copilot："
-echo "   - 打开 internal/logic/createuserlogic.go"
-echo "   - 尝试实现 CreateUser 方法"
-echo "   - Copilot 会根据 ai-context 提供 go-zero 规范的建议"
+echo "3. Test GitHub Copilot:"
+echo "   - Open internal/logic/createuserlogic.go"
+echo "   - Try implementing the CreateUser method"
+echo "   - Copilot will provide go-zero compliant suggestions based on ai-context"
 echo ""
-echo "4. 运行服务："
-echo -e "   ${YELLOW}go run userapidemo.go${NC}"
+echo "4. Run the service:"
+echo -e "   ${YELLOW}go run userapidemo.go -f etc/user-api.yaml${NC}"
 echo ""
