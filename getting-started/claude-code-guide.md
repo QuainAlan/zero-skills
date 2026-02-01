@@ -6,19 +6,24 @@ This guide explains how to use zero-skills effectively with Claude Code, leverag
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
 - [Advanced Features](#advanced-features)
+- [Skill Pattern Examples](#skill-pattern-examples)
 - [Example Workflows](#example-workflows)
 - [Troubleshooting](#troubleshooting)
 
 ## Installation
 
-### Option 1: Project-Level (Automatic for this project)
+### Option 1: Project-Level (Recommended for go-zero projects)
 
-The skill is already available when you work in the zero-skills repository:
-```
-zero-skills/
-└── .claude/
-    └── skills/
-        └── zero-skills/     # Symlinks to skill content
+Add zero-skills to your project for automatic discovery:
+
+```bash
+cd your-gozero-project/
+
+# Create skills directory
+mkdir -p .claude/skills
+
+# Clone zero-skills
+git clone https://github.com/zeromicro/zero-skills.git .claude/skills/zero-skills
 ```
 
 Claude Code automatically discovers skills in `.claude/skills/` directories.
@@ -29,19 +34,10 @@ Install to your personal skills directory to use with any go-zero project:
 
 ```bash
 # Create personal skills directory
-mkdir -p ~/.claude/skills/zero-skills
+mkdir -p ~/.claude/skills
 
-# Option A: Clone the repository
+# Clone zero-skills
 git clone https://github.com/zeromicro/zero-skills.git ~/.claude/skills/zero-skills
-
-# Option B: Create symlinks (if you already have the repo)
-cd ~/.claude/skills/zero-skills
-ln -s /path/to/zero-skills/SKILL.md SKILL.md
-ln -s /path/to/zero-skills/getting-started getting-started
-ln -s /path/to/zero-skills/references references
-ln -s /path/to/zero-skills/best-practices best-practices
-ln -s /path/to/zero-skills/troubleshooting troubleshooting
-ln -s /path/to/zero-skills/examples examples
 ```
 
 ### Option 3: Enterprise-Level (For organizations)
@@ -94,7 +90,7 @@ Claude lists all loaded skills. Look for `zero-skills` in the output.
 
 ### Dynamic Context Injection
 
-Skills can execute shell commands to gather live project data using `!`command"` syntax.
+Skills can execute shell commands to gather live project data using `!`command`` syntax.
 
 **Example: Find existing services**
 ```yaml
@@ -110,7 +106,7 @@ Current services in this project:
 
 The commands execute before Claude sees the prompt, injecting actual file paths.
 
-See [.claude/skills/examples/analyze-project.md](.claude/skills/examples/analyze-project.md) for a complete example.
+See [examples/claude-code-patterns/analyze-project.md](../examples/claude-code-patterns/analyze-project.md) for a complete example.
 
 ### Subagent Workflows
 
@@ -132,7 +128,7 @@ Benefits:
 - Read-only tools prevent accidental modifications
 - Focused analysis without distractions
 
-See [.claude/skills/examples/analyze-project.md](.claude/skills/examples/analyze-project.md) for details.
+See [examples/claude-code-patterns/analyze-project.md](../examples/claude-code-patterns/analyze-project.md) for details.
 
 #### Plan Agent (Architecture Design)
 ```yaml
@@ -150,7 +146,7 @@ Benefits:
 - No code execution (prevents premature implementation)
 - Fresh perspective on architecture
 
-See [.claude/skills/examples/plan-architecture.md](.claude/skills/examples/plan-architecture.md) for details.
+See [examples/claude-code-patterns/plan-architecture.md](../examples/claude-code-patterns/plan-architecture.md) for details.
 
 ### Tool Restrictions
 
@@ -200,7 +196,16 @@ Access arguments:
 - `$ARGUMENTS`: All arguments combined
 - `${CLAUDE_SESSION_ID}`: Current session ID
 
-See [.claude/skills/examples/generate-service.md](.claude/skills/examples/generate-service.md) for details.
+See [examples/claude-code-patterns/generate-service.md](../examples/claude-code-patterns/generate-service.md) for details.
+
+## Skill Pattern Examples
+
+See [examples/claude-code-patterns/](../examples/claude-code-patterns/) for advanced skill patterns:
+
+- **[analyze-project.md](../examples/claude-code-patterns/analyze-project.md)** - Explore agent with dynamic context
+- **[generate-service.md](../examples/claude-code-patterns/generate-service.md)** - Argument passing patterns
+- **[plan-architecture.md](../examples/claude-code-patterns/plan-architecture.md)** - Plan agent for design
+- **[README.md](../examples/claude-code-patterns/README.md)** - Full guide with best practices
 
 ## Example Workflows
 
