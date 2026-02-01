@@ -37,10 +37,6 @@ Invoke this skill when working with go-zero:
 
 ## 📚 Knowledge Structure
 
-This skill organizes go-zero knowledge into focused modules. Load specific guides as needed rather than reading everything at once:
-
-## 📚 Knowledge Structure
-
 This skill organizes go-zero knowledge into focused modules. **Load specific guides as needed** rather than reading everything at once:
 
 ### Quick Start Guide
@@ -105,11 +101,6 @@ This skill organizes go-zero knowledge into focused modules. **Load specific gui
 **File**: [getting-started/claude-code-guide.md](getting-started/claude-code-guide.md)
 **When to load**: Setting up Claude Code for zero-skills usage
 **Contains**: Installation, invocation methods, advanced features (subagents, dynamic context)
-│   └── ai-ecosystem-guide.md
-└── examples/                   # Demo projects and scripts
-    ├── verify-tutorial.sh
-    └── demo-project/
-```
 
 ## 🚀 Common Workflows
 

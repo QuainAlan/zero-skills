@@ -104,4 +104,4 @@ If you have [mcp-zero](https://github.com/zeromicro/mcp-zero) installed, Claude 
 2. Execute actual `goctl` commands via mcp-zero tools
 3. Validate generated code automatically
 
-See [getting-started/claude-code-guide.md](../../../getting-started/claude-code-guide.md) for integration details.
+See [getting-started/claude-code-guide.md](../getting-started/claude-code-guide.md) for integration details.

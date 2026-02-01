@@ -136,7 +136,7 @@ Uses Explore agent to check architecture compliance
 - **Skill docs**: [SKILL.md](SKILL.md)
 - **Claude Code guide**: [getting-started/claude-code-guide.md](getting-started/claude-code-guide.md)
 - **go-zero docs**: [go-zero.dev](https://go-zero.dev)
-- **Examples**: [.claude/skills/examples/](.claude/skills/examples/)
+- **Examples**: [skill-patterns/](skill-patterns/)
 
 ## Tips
 
@@ -144,7 +144,7 @@ Uses Explore agent to check architecture compliance
 💡 Reference files: ".api files" or "REST API" trigger automatic loading
 💡 Use mcp-zero: Combine knowledge (zero-skills) + execution (mcp-zero)
 💡 Create custom skills: Extend for project-specific patterns
-💡 Check examples: See [.claude/skills/examples/](.claude/skills/examples/) for advanced usage
+💡 Check examples: See [skill-patterns/](skill-patterns/) for advanced usage
 
 ---
 

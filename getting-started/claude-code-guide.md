@@ -251,7 +251,7 @@ Claude (automatically or if you have the analyze skill):
 4. Identifies anti-patterns
 5. Returns summary to main conversation
 
-See [.claude/skills/examples/analyze-project.md](.claude/skills/examples/analyze-project.md) to create this skill.
+See [skill-patterns/analyze-project.md](../skill-patterns/analyze-project.md) for this skill template.
 
 ### Workflow 3: Planning Microservices Architecture
 
@@ -268,7 +268,7 @@ Claude (using Plan agent):
 4. Provides `.api` and `.proto` examples
 5. Suggests implementation order
 
-See [.claude/skills/examples/plan-architecture.md](.claude/skills/examples/plan-architecture.md) to create this skill.
+See [skill-patterns/plan-architecture.md](../skill-patterns/plan-architecture.md) for this skill template.
 
 ### Workflow 4: Combined with mcp-zero
 

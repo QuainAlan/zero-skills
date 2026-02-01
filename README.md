@@ -26,6 +26,7 @@ zero-skills/
 ├── SKILL.md                    # Entry point with YAML frontmatter
 ├── QUICKSTART.md               # Quick reference card
 ├── getting-started/            # Getting started guides
+│   └── claude-code-guide.md    # Using zero-skills with Claude Code
 ├── references/                 # Detailed pattern documentation
 │   ├── rest-api-patterns.md    # REST API development patterns
 │   ├── rpc-patterns.md         # gRPC service patterns
@@ -33,16 +34,11 @@ zero-skills/
 │   └── resilience-patterns.md  # Resilience and fault tolerance
 ├── best-practices/             # Production recommendations
 ├── troubleshooting/            # Common issues and solutions
-├── getting-started/            # Getting started guides
-│   └── claude-code-guide.md   # Using zero-skills with Claude Code
-├── examples/                   # Demo projects and verification
-└── .claude/                    # Claude Code integration
-    └── skills/
-        ├── zero-skills/        # Symlinks for skill discovery
-        └── examples/           # Advanced skill examples
-            ├── analyze-project.md
-            ├── generate-service.md
-            └── plan-architecture.md
+├── skill-patterns/             # Advanced skill examples (templates)
+│   ├── analyze-project.md      # Explore agent example
+│   ├── generate-service.md     # Argument passing example
+│   └── plan-architecture.md    # Plan agent example
+└── examples/                   # Demo projects and verification
 ```
 
 ## Using This Skill
@@ -51,32 +47,25 @@ zero-skills/
 
 Claude Code natively supports the [Agent Skills specification](https://agentskills.io/). This skill is optimized for Claude Code with advanced features:
 
-#### Automatic Discovery (Project-Level)
-The skill is automatically available when you work in this project:
-```
-zero-skills/
-├── .claude/
-│   └── skills/
-│       └── zero-skills/    # Symlinks to skill content
-│           ├── SKILL.md → ../../../SKILL.md
-│           └── ...
+#### Project-Level Installation (Git Submodule)
+Add zero-skills to your project for automatic discovery:
+
+```bash
+# Add as git submodule
+git submodule add https://github.com/zeromicro/zero-skills.git .claude/skills/zero-skills
+
+# Or clone directly
+git clone https://github.com/zeromicro/zero-skills.git .claude/skills/zero-skills
 ```
 
-#### Manual Installation (Personal-Level)
+Claude Code automatically discovers skills in `.claude/skills/` directories.
+
+#### Personal-Level Installation
 To use across all your projects, install to your personal skills directory:
 
 ```bash
-# Create personal skills directory
-mkdir -p ~/.claude/skills/zero-skills
-
-# Clone or symlink this repo
-cd ~/.claude/skills/zero-skills
-ln -s /path/to/zero-skills/SKILL.md SKILL.md
-ln -s /path/to/zero-skills/getting-started getting-started
-ln -s /path/to/zero-skills/references references
-ln -s /path/to/zero-skills/best-practices best-practices
-ln -s /path/to/zero-skills/troubleshooting troubleshooting
-ln -s /path/to/zero-skills/articles articles
+## Clone to personal skills directory
+git clone https://github.com/zeromicro/zero-skills.git ~/.claude/skills/zero-skills
 ```
 
 #### Usage in Claude Code
@@ -89,7 +78,7 @@ ln -s /path/to/zero-skills/articles articles
 - **Dynamic context**: Skills can execute shell commands to gather live project data
 - **Subagents**: Use `context: fork` for isolated analysis or planning tasks
 - **Tool restrictions**: `allowed-tools` ensures safe, read-only operations
-- See [.claude/skills/examples/](.claude/skills/examples/) for advanced patterns
+- See [skill-patterns/](skill-patterns/) for advanced patterns and templates
 
 ### With Claude Desktop
 
@@ -185,7 +174,7 @@ See [Claude Code Guide](getting-started/claude-code-guide.md) for detailed integ
 - ⚡ **[QUICKSTART.md](QUICKSTART.md)** - Quick reference card
 -  **[go-zero Quick Start](https://go-zero.dev/docs/quick-start)** - Official go-zero framework tutorial
 - 💡 **[Claude Code Guide](getting-started/claude-code-guide.md)** - Using zero-skills with Claude Code
-- 🎯 **[Advanced Examples](.claude/skills/examples/)** - Subagents, dynamic context, etc.
+- 🎯 **[Advanced Examples](skill-patterns/)** - Subagents, dynamic context, etc.
 
 ## Contributing
 
