@@ -1,7 +1,7 @@
 # goctl Command Reference
 
 > This file is a skill for AI assistants. It teaches the AI to use goctl directly in the terminal
-> to generate go-zero code, replacing the need for a separate MCP server.
+> to generate go-zero code.
 
 ## 1. goctl Installation & Detection
 

@@ -86,6 +86,18 @@ This skill organizes go-zero knowledge into focused modules. **Load specific gui
 - Timeout and retry strategies
 - Graceful shutdown and degradation
 
+#### 5. goctl Command Reference
+**File**: [references/goctl-commands.md](references/goctl-commands.md)
+**When to load**: Generating code with goctl, setting up new services, post-generation steps
+**Contains**:
+- goctl installation and detection
+- API/RPC/Model generation commands with exact flags
+- Post-generation pipeline (mod tidy, import fixing, build verification)
+- Config templates (API, RPC, production)
+- Deployment templates (Dockerfile, Kubernetes, Docker Compose)
+- Middleware and error handler templates
+- API spec patterns (CRUD, JWT, mixed auth)
+
 ### Supporting Resources
 
 #### Best Practices
@@ -206,18 +218,19 @@ Follow this path based on your needs:
 
 ## 🔗 Integration with go-zero AI Ecosystem
 
-This skill is part of a three-tool ecosystem for AI-assisted go-zero development:
+This skill is part of a two-layer ecosystem for AI-assisted go-zero development:
 
 | Tool | Purpose | Best For |
 |------|---------|----------|
 | **[ai-context](https://github.com/zeromicro/ai-context)** | Concise workflow instructions (~5KB) | GitHub Copilot, Cursor, Windsurf |
-| **zero-skills** (this repo) | Comprehensive knowledge base (~40KB) | Claude Code, deep learning, reference |
-| **[mcp-zero](https://github.com/zeromicro/mcp-zero)** | Runtime tools (execute goctl commands) | Claude Desktop/Code for code generation |
+| **zero-skills** (this repo) | Comprehensive knowledge base + goctl reference (~45KB) | All AI tools, deep learning, reference |
+
+The AI runs `goctl` directly in the terminal for code generation — no separate MCP server needed. See [references/goctl-commands.md](references/goctl-commands.md) for the complete command reference.
 
 **Usage in Claude Code:**
 - This skill loads automatically when working with go-zero projects
 - Use `/zero-skills` to invoke manually for go-zero guidance
-- Combine with mcp-zero tools for automatic code generation
+- AI runs goctl commands directly in the terminal for code generation
 - Reference specific pattern files when needed (Claude loads them on demand)
 
 See [getting-started/claude-code-guide.md](getting-started/claude-code-guide.md) for detailed usage instructions.

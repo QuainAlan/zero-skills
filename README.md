@@ -147,54 +147,51 @@ Then create `.windsurfrules` referencing the patterns.
 
 ## Integration with go-zero AI Ecosystem
 
-zero-skills is part of a three-tool ecosystem for AI-assisted go-zero development:
+zero-skills is part of a two-layer ecosystem for AI-assisted go-zero development:
 
 | Tool | Purpose | Size | Best For |
 |------|---------|------|----------|
 | **[ai-context](https://github.com/zeromicro/ai-context)** | Workflow instructions and decision trees | ~5KB | GitHub Copilot, Cursor, Windsurf |
-| **zero-skills** (this repo) | Comprehensive knowledge base | ~40KB | Claude Code, deep learning, reference |
-| **[mcp-zero](https://github.com/zeromicro/mcp-zero)** | Runtime tools (execute goctl commands) | MCP Server | Claude Desktop/Code for code generation |
+| **zero-skills** (this repo) | Comprehensive knowledge base + goctl reference | ~45KB | All AI tools, deep learning, reference |
+
+The AI runs `goctl` directly in the terminal for code generation — no separate tools or servers needed. See [references/goctl-commands.md](references/goctl-commands.md) for the complete command reference.
 
 ### How They Work Together
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                     AI Assistant                            │
-│  (Claude Code, GitHub Copilot, Cursor, etc.)               │
+│  (Claude Code, GitHub Copilot, Cursor, Windsurf)           │
 └────────────┬─────────────────────┬──────────────────────────┘
              │                     │
              ├─ Workflow Layer ────┤
              │  ai-context         │  "What to do" - Quick decisions
              │  (~5KB)             │  Loaded for every interaction
              │                     │
-             ├─ Knowledge Layer ───┤
-             │  zero-skills        │  "How & Why" - Detailed patterns
-             │  (~40KB)            │  Loaded when needed
-             │                     │
-             └─ Execution Layer ───┘
-                mcp-zero             "Do it" - Run goctl commands
-                (MCP Server)          Generate actual code files
+             └─ Knowledge Layer ───┘
+                zero-skills          "How & Why" - Detailed patterns
+                (~45KB)              + goctl command reference
+                                     Loaded when needed
 ```
 
 ### Usage Scenarios
 
-**Scenario 1: GitHub Copilot User**
-- Uses: `ai-context` (loaded via `.github/copilot-instructions.md`)
-- Benefits: Quick inline suggestions, workflow guidance
-- Limitation: No code execution, manual goctl commands
-
-**Scenario 2: Claude Code User (Best Experience)**
-- Uses: `zero-skills` (this repo) + `mcp-zero` tools
+**Scenario 1: Claude Code User (Best Experience)**
+- Uses: `zero-skills` (this repo) as native skill
 - Benefits:
   - Deep knowledge from pattern guides
-  - Automatic code generation via goctl
+  - AI runs goctl commands directly in terminal
   - Dynamic context with live project data
   - Subagent workflows for complex tasks
 - Invocation: `/zero-skills` or automatic when working with go-zero
 
+**Scenario 2: GitHub Copilot User**
+- Uses: `ai-context` (loaded via `.github/copilot-instructions.md`)
+- Benefits: Quick inline suggestions, workflow guidance, goctl via terminal
+
 **Scenario 3: Cursor/Windsurf User**
 - Uses: `ai-context` (in project rules) + links to `zero-skills`
-- Benefits: IDE-native experience with go-zero guidance
+- Benefits: IDE-native experience with go-zero guidance, goctl via terminal
 
 See [Getting Started Guides](getting-started/) for detailed integration instructions for each tool.
 

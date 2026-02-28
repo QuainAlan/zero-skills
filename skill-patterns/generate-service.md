@@ -97,11 +97,11 @@ This shows existing services to avoid naming conflicts.
 - Prevents accidental code generation
 - Clear user intent for side effects
 
-## Combined with mcp-zero
+## Using goctl in Terminal
 
-If you have [mcp-zero](https://github.com/zeromicro/mcp-zero) installed, Claude can:
-1. Use this skill for planning and structure
-2. Execute actual `goctl` commands via mcp-zero tools
-3. Validate generated code automatically
+Claude runs goctl commands directly in the terminal:
+1. Uses this skill for planning and structure
+2. Executes `goctl` commands in the terminal
+3. Runs `go mod tidy && go build ./...` to validate
 
-See [getting-started/claude-code-guide.md](../getting-started/claude-code-guide.md) for integration details.
+See [references/goctl-commands.md](../references/goctl-commands.md) for the complete command reference.

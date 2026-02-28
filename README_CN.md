@@ -147,54 +147,51 @@ git clone https://github.com/zeromicro/zero-skills.git .ai-context/zero-skills
 
 ## 与 go-zero AI 生态集成
 
-zero-skills 是 go-zero AI 辅助开发三件套生态的一部分：
+zero-skills 是 go-zero AI 辅助开发两层生态的一部分：
 
 | 工具 | 用途 | 大小 | 最适合 |
 |------|------|------|--------|
 | **[ai-context](https://github.com/zeromicro/ai-context)** | 工作流指令和决策树 | ~5KB | GitHub Copilot, Cursor, Windsurf |
-| **zero-skills**（本仓库） | 完整知识库 | ~40KB | Claude Code，深度学习，参考 |
-| **[mcp-zero](https://github.com/zeromicro/mcp-zero)** | 运行时工具（执行 goctl 命令） | MCP Server | Claude Desktop/Code 代码生成 |
+| **zero-skills**（本仓库） | 完整知识库 + goctl 参考 | ~45KB | 所有 AI 工具，深度学习，参考 |
+
+AI 在终端中直接运行 `goctl` 生成代码——无需额外工具或服务器。完整命令参考见 [references/goctl-commands.md](references/goctl-commands.md)。
 
 ### 它们如何协作
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                     AI 助手                                  │
-│  (Claude Code, GitHub Copilot, Cursor, 等)                  │
+│  (Claude Code, GitHub Copilot, Cursor, Windsurf)           │
 └────────────┬─────────────────────┬──────────────────────────┘
              │                     │
              ├─ 工作流层 ──────────┤
              │  ai-context         │  "做什么" - 快速决策
              │  (~5KB)             │  每次交互都加载
              │                     │
-             ├─ 知识层 ────────────┤
-             │  zero-skills        │  "如何和为什么" - 详细模式
-             │  (~40KB)            │  需要时加载
-             │                     │
-             └─ 执行层 ────────────┘
-                mcp-zero             "执行" - 运行 goctl 命令
-                (MCP Server)          生成实际代码文件
+             └─ 知识层 ────────────┘
+                zero-skills          "如何和为什么" - 详细模式
+                (~45KB)              + goctl 命令参考
+                                     需要时加载
 ```
 
 ### 使用场景
 
-**场景 1: GitHub Copilot 用户**
-- 使用：`ai-context`（通过 `.github/copilot-instructions.md` 加载）
-- 优点：快速内联建议，工作流指导
-- 限制：无代码执行，需手动运行 goctl 命令
-
-**场景 2: Claude Code 用户（最佳体验）**
-- 使用：`zero-skills`（本仓库）+ `mcp-zero` 工具
+**场景 1: Claude Code 用户（最佳体验）**
+- 使用：`zero-skills`（本仓库）作为原生 skill
 - 优点：
   - 来自模式指南的深度知识
-  - 通过 goctl 自动生成代码
+  - AI 在终端直接运行 goctl 命令
   - 实时项目数据的动态上下文
   - 复杂任务的子代理工作流
 - 调用：`/zero-skills` 或处理 go-zero 时自动加载
 
+**场景 2: GitHub Copilot 用户**
+- 使用：`ai-context`（通过 `.github/copilot-instructions.md` 加载）
+- 优点：快速内联建议，工作流指导，通过终端运行 goctl
+
 **场景 3: Cursor/Windsurf 用户**
 - 使用：`ai-context`（在项目规则中）+ `zero-skills` 链接
-- 优点：IDE 原生体验加 go-zero 指导
+- 优点：IDE 原生体验加 go-zero 指导，通过终端运行 goctl
 
 参见 [入门指南](getting-started/) 获取每个工具的详细集成说明。
 

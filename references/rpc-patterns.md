@@ -701,4 +701,3 @@ Etcd:
 - HTTP standards required
 
 For REST patterns, see [REST API Patterns](./rest-api-patterns.md).
-For combining both, see [Gateway Patterns](./gateway-patterns.md).

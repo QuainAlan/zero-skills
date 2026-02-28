@@ -54,9 +54,9 @@ This guide explains how to use zero-skills effectively with Claude Code, leverag
 
 | Tool | Purpose | Command/Usage |
 |------|---------|---------------|
-| **mcp-zero** | Execute goctl commands | Claude calls automatically |
-| **ai-context** | Quick workflows | GitHub Copilot integration |
 | **goctl** | Code generation | `goctl api go`, `goctl model`, etc. |
+| **ai-context** | Quick workflows | GitHub Copilot integration |
+| **zero-skills** | Knowledge base | `/zero-skills` or automatic |
 
 ---
 
@@ -320,9 +320,9 @@ Claude (using Plan agent):
 
 See [skill-patterns/plan-architecture.md](../skill-patterns/plan-architecture.md) for this skill template.
 
-### Workflow 4: Combined with mcp-zero
+### Workflow 4: Using goctl in Terminal
 
-If you have [mcp-zero](https://github.com/zeromicro/mcp-zero) installed:
+Claude runs goctl commands directly in the terminal:
 
 ```
 You: Create a user API service with database operations
@@ -330,12 +330,13 @@ You: Create a user API service with database operations
 
 Claude:
 1. Uses zero-skills for patterns and structure
-2. Calls mcp-zero `create_api_service` to generate files
-3. Calls mcp-zero `generate_model` for database models
-4. Validates generated code against patterns
-5. Shows you how to run and test
+2. Writes the `.api` spec file
+3. Runs `goctl api go -api user.api -dir . --style go_zero` in terminal
+4. Runs `goctl model mysql datasource ...` for database models
+5. Runs `go mod tidy && go build ./...` to verify
+6. Implements business logic in `internal/logic/`
 
-This combines **knowledge** (zero-skills) with **execution** (mcp-zero).
+See [references/goctl-commands.md](../references/goctl-commands.md) for the complete command reference.
 
 ## Troubleshooting
 
@@ -429,11 +430,11 @@ You: How do I implement database transactions?
 
 Claude loads just [references/database-patterns.md](../references/database-patterns.md), not the entire skill.
 
-### 3. Combine with mcp-zero
+### 3. Combine Knowledge with Execution
 
-Use zero-skills for knowledge, mcp-zero for execution:
+Use zero-skills for knowledge, goctl for execution:
 - zero-skills: "What pattern should I use?"
-- mcp-zero: "Generate the code for me"
+- goctl: "Generate the code" (AI runs in terminal)
 
 ### 4. Create Custom Skills
 
@@ -481,7 +482,7 @@ Create skills with `context: fork` for:
 - **Official docs**: [code.claude.com/docs/en/skills](https://code.claude.com/docs/en/skills)
 - **Agent Skills spec**: [agentskills.io](https://agentskills.io/)
 - **go-zero docs**: [go-zero.dev](https://go-zero.dev)
-- **mcp-zero tools**: [github.com/zeromicro/mcp-zero](https://github.com/zeromicro/mcp-zero)
+- **goctl commands**: [references/goctl-commands.md](../references/goctl-commands.md)
 - **ai-context**: [github.com/zeromicro/ai-context](https://github.com/zeromicro/ai-context)
 
 ## Feedback and Contributions
@@ -496,7 +497,7 @@ Found an issue or want to improve zero-skills?
 **Tips:**
 - Be specific: "Create a user API with authentication" > "Help me"
 - Reference files: ".api files" or "REST API" trigger automatic loading
-- Use mcp-zero: Combine knowledge (zero-skills) + execution (mcp-zero)
+- Use goctl: AI runs goctl commands directly in the terminal for code generation
 - Create custom skills: Extend for project-specific patterns
 - Check examples: See [skill-patterns/](../skill-patterns/) for advanced usage
 

@@ -519,4 +519,3 @@ Use the standard three-layer REST pattern for:
 - Microservice APIs
 
 For RPC services, see [RPC Patterns](./rpc-patterns.md).
-For complex workflows, see [Service Orchestration Patterns](./orchestration-patterns.md).

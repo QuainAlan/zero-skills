@@ -692,4 +692,4 @@ func TestTimeout(t *testing.T) {
 For related patterns, see:
 - [REST API Patterns](./rest-api-patterns.md) for API-level resilience
 - [RPC Patterns](./rpc-patterns.md) for RPC resilience
-- [Caching Strategies](./caching-strategies.md) for cache-based resilience
+- [Database Patterns](./database-patterns.md) for cache-based resilience
