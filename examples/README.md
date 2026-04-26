@@ -1,78 +1,84 @@
 # Examples
 
+English | [简体中文](#简体中文)
+
 This directory contains example scripts and demo code for zero-skills tutorials.
 
 ## demo-project/
 
+A complete GitHub Copilot + go-zero demo project. Automatically creates a go-zero project configured with ai-context to verify AI-assisted development.
+
 完整的 GitHub Copilot + go-zero 演示项目。自动创建配置了 ai-context 的 go-zero 项目，用于验证 AI 辅助开发效果。
 
-**快速开始：**
+**Quick start / 快速开始：**
 
 ```bash
 cd demo-project
 ./setup-demo.sh
 ```
 
-**详细文档：** [demo-project/README.md](demo-project/README.md)
+**Documentation / 详细文档：** [demo-project/README.md](demo-project/README.md)
 
-**包含功能：**
-- ✅ 自动配置 GitHub Copilot（ai-context submodule）
-- ✅ 创建完整的 go-zero REST API 项目
-- ✅ 提供多个测试场景验证 Copilot 效果
-- ✅ 包含验证脚本确认配置正确
+**Features / 包含功能：**
+- ✅ Auto-configure GitHub Copilot (ai-context submodule) / 自动配置 GitHub Copilot（ai-context submodule）
+- ✅ Create a complete go-zero REST API project / 创建完整的 go-zero REST API 项目
+- ✅ Multiple test scenarios for verifying Copilot results / 提供多个测试场景验证 Copilot 效果
+- ✅ Verification script to confirm correct setup / 包含验证脚本确认配置正确
 
 ## verify-tutorial.sh
 
+Validates the completeness and correctness of AI tool ecosystem configuration tutorials.
+
 验证 AI 工具生态配置教程的完整性和正确性。
 
-**功能：**
-- ✅ 测试 GitHub Copilot 配置（submodule + 符号链接）
-- ✅ 测试 Cursor 配置（.cursorrules）
-- ✅ 测试 Windsurf 配置（.windsurfrules）
-- ✅ 测试 submodule 更新功能
-- ✅ 验证 ai-context 内容结构
-- ✅ 验证 zero-skills 模式引用
+**Features / 功能：**
+- ✅ Test GitHub Copilot configuration (submodule + symlink) / 测试 GitHub Copilot 配置（submodule + 符号链接）
+- ✅ Test Cursor configuration (.cursorrules) / 测试 Cursor 配置（.cursorrules）
+- ✅ Test Windsurf configuration (.windsurfrules) / 测试 Windsurf 配置（.windsurfrules）
+- ✅ Test submodule update functionality / 测试 submodule 更新功能
+- ✅ Verify ai-context content structure / 验证 ai-context 内容结构
+- ✅ Verify zero-skills pattern references / 验证 zero-skills 模式引用
 
-**使用方法：**
+**Usage / 使用方法：**
 
 ```bash
-# 运行验证脚本
+# Run the verification script / 运行验证脚本
 ./examples/verify-tutorial.sh
 
-# 或者使用绝对路径
+# Or with an absolute path / 或者使用绝对路径
 bash /path/to/zero-skills/examples/verify-tutorial.sh
 ```
 
-**测试内容：**
+**Test coverage / 测试内容：**
 
-1. **GitHub Copilot 配置测试**
-   - 添加 ai-context 为 submodule 到 `.github/ai-context`
-   - 创建符号链接到 `.github/copilot-instructions.md`
-   - 验证文件内容包含 go-zero 相关内容
+1. **GitHub Copilot configuration test / GitHub Copilot 配置测试**
+   - Add ai-context as submodule to `.github/ai-context` / 添加 ai-context 为 submodule 到 `.github/ai-context`
+   - Create symlink to `.github/copilot-instructions.md` / 创建符号链接到 `.github/copilot-instructions.md`
+   - Verify file content includes go-zero related content / 验证文件内容包含 go-zero 相关内容
 
-2. **Cursor 配置测试**
-   - 添加 ai-context 为 submodule 到 `.cursorrules`
-   - 验证目录结构和 markdown 文件
-   - 确认内容正确加载
+2. **Cursor configuration test / Cursor 配置测试**
+   - Add ai-context as submodule to `.cursorrules` / 添加 ai-context 为 submodule 到 `.cursorrules`
+   - Verify directory structure and markdown files / 验证目录结构和 markdown 文件
+   - Confirm content loads correctly / 确认内容正确加载
 
-3. **Windsurf 配置测试**
-   - 添加 ai-context 为 submodule 到 `.windsurfrules`
-   - 验证目录结构和 markdown 文件
-   - 确认内容正确加载
+3. **Windsurf configuration test / Windsurf 配置测试**
+   - Add ai-context as submodule to `.windsurfrules` / 添加 ai-context 为 submodule 到 `.windsurfrules`
+   - Verify directory structure and markdown files / 验证目录结构和 markdown 文件
+   - Confirm content loads correctly / 确认内容正确加载
 
-4. **Submodule 更新测试**
-   - 执行 `git submodule update --remote`
-   - 验证更新功能正常工作
+4. **Submodule update test / Submodule 更新测试**
+   - Run `git submodule update --remote` / 执行 `git submodule update --remote`
+   - Verify update works correctly / 验证更新功能正常工作
 
-5. **内容结构验证**
-   - 检查 ai-context 包含必需的章节
-   - 确认文档结构完整
+5. **Content structure validation / 内容结构验证**
+   - Check ai-context includes required sections / 检查 ai-context 包含必需的章节
+   - Confirm documentation structure is complete / 确认文档结构完整
 
-6. **zero-skills 引用验证**
-   - 验证所有模式文档链接存在
-   - 确认引用正确指向 zero-skills 仓库
+6. **zero-skills reference validation / zero-skills 引用验证**
+   - Verify all pattern document links exist / 验证所有模式文档链接存在
+   - Confirm references correctly point to zero-skills repository / 确认引用正确指向 zero-skills 仓库
 
-**输出示例：**
+**Sample output / 输出示例：**
 
 ```
 ================================================
@@ -98,7 +104,9 @@ Zero-Skills AI Ecosystem Tutorial Verification
 ✓ 所有测试通过！教程验证成功！
 ```
 
-**清理测试目录：**
+**Cleanup / 清理测试目录：**
+
+The script creates a temporary directory under `/tmp`. Delete it after testing:
 
 脚本会在 `/tmp` 下创建临时测试目录，测试完成后可以删除：
 
@@ -107,18 +115,20 @@ Zero-Skills AI Ecosystem Tutorial Verification
 rm -rf /tmp/zero-skills-demo-12345
 ```
 
-**注意事项：**
+**Notes / 注意事项：**
 
-- 脚本需要 Git 环境
-- 需要网络连接以克隆 ai-context 仓库
-- macOS/Linux 系统可直接运行
-- Windows 用户建议在 Git Bash 或 WSL 中运行
+- Requires a Git environment / 脚本需要 Git 环境
+- Requires network access to clone ai-context / 需要网络连接以克隆 ai-context 仓库
+- Runs directly on macOS/Linux / macOS/Linux 系统可直接运行
+- Windows users should run in Git Bash or WSL / Windows 用户建议在 Git Bash 或 WSL 中运行
 
-## 贡献
+## Contributing / 贡献
+
+Contributions of new example scripts are welcome! Please ensure:
 
 欢迎添加更多示例脚本！请确保：
 
-1. 脚本包含清晰的注释
-2. 提供使用说明
-3. 包含错误处理
-4. 验证功能正确性
+1. Scripts include clear comments / 脚本包含清晰的注释
+2. Usage instructions are provided / 提供使用说明
+3. Error handling is included / 包含错误处理
+4. Functionality is verified / 验证功能正确性
