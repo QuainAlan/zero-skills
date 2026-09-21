@@ -95,7 +95,20 @@ This skill organizes go-zero knowledge into focused modules. **Load specific gui
 - Middleware and error handler templates
 - API spec patterns (CRUD, JWT, mixed auth)
 
-#### 7. Distributed Transaction Patterns
+#### 7. Swagger / OpenAPI Documentation
+**File**: [references/swagger-patterns.md](references/swagger-patterns.md)
+**When to load**: Generating Swagger/OpenAPI docs from `.api` files, adding API documentation annotations
+**Contains**:
+- Built-in `goctl api swagger` command reference (goctl ≥ 1.8.4, no plugin needed)
+- `info` block metadata: title, description, host, basePath, schemes, useDefinitions, wrapCodeMsg
+- `@server` tags for Swagger UI grouping
+- `@doc` for endpoint summary/description
+- Field tags: `example`, `options` (enum), `range`, `default`, `optional`
+- Security definitions (`securityDefinitionsFromJson` + `authType`)
+- Business error codes (`bizCodeEnumDescription`)
+- Complete multi-file `.api` structure example with best practices
+
+#### 8. Distributed Transaction Patterns
 **File**: [references/distributed-transactions.md](references/distributed-transactions.md)
 **When to load**: Cross-service data consistency, DTM integration, SAGA/TCC patterns
 **Contains**:
@@ -103,7 +116,7 @@ This skill organizes go-zero knowledge into focused modules. **Load specific gui
 - Verified DTM HTTP Saga skeleton
 - Barrier, idempotency, compensation, security, and failure-testing checklists
 
-#### 8. Observability Patterns
+#### 9. Observability Patterns
 **File**: [references/observability.md](references/observability.md)
 **When to load**: Production monitoring, tracing, alerting setup
 **Contains**:
@@ -114,7 +127,7 @@ This skill organizes go-zero knowledge into focused modules. **Load specific gui
 - Grafana dashboards and alerting rules
 - ELK integration for log aggregation
 
-#### 9. Message Queue Patterns
+#### 10. Message Queue Patterns
 **File**: [references/message-queue.md](references/message-queue.md)
 **When to load**: Async processing, delayed tasks, event streaming
 **Contains**:
@@ -123,7 +136,7 @@ This skill organizes go-zero knowledge into focused modules. **Load specific gui
 - Current producer and consumer APIs
 - Lifecycle, retry, idempotency, and shutdown guidance
 
-#### 10. Advanced Components
+#### 11. Advanced Components
 **File**: [references/advanced-components.md](references/advanced-components.md)
 **When to load**: Performance optimization, concurrent processing, caching
 **Contains**:
@@ -212,6 +225,17 @@ These workflows guide you through typical go-zero development tasks:
 5. Test with RPC client and handle errors
 
 **Detailed guide**: [references/rpc-patterns.md](references/rpc-patterns.md#complete-rpc-workflow)
+
+### Generating Swagger Documentation
+
+**Steps:**
+1. Add `info` block with swagger metadata (title, host, basePath, schemes) to entry `.api` file
+2. Add `tags` in `@server` blocks for Swagger UI grouping
+3. Add `@doc` summary to each endpoint
+4. Add `example`/`options`/`range` tags to request/response fields
+5. Run `goctl api swagger --api entry.api --dir docs/swagger --filename api`
+
+**Detailed guide**: [references/swagger-patterns.md](references/swagger-patterns.md)
 
 ### Using High-Performance Data Structures
 
