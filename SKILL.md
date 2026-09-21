@@ -1,6 +1,6 @@
 ---
 name: zero-skills
-description: This skill should be used when the user asks to "create a go-zero API", "build a REST service with go-zero", "generate code with goctl", "add middleware to go-zero", "implement a gRPC service", "set up service discovery", "add circuit breaker or rate limiting", "use go-zero database model", "troubleshoot go-zero errors", or is working with go-zero microservices, .api files, .proto files, or a go.mod containing github.com/zeromicro/go-zero.
+description: Use when building, reviewing, or troubleshooting go-zero services, including REST and RPC code generation, middleware, service discovery, database models, collection data structures, resilience, observability, distributed transactions, and message queues. Trigger for goctl, .api or .proto files, or projects importing github.com/zeromicro/go-zero.
 version: 1.0.0
 license: MIT
 allowed-tools:
@@ -11,13 +11,14 @@ allowed-tools:
 
 # go-zero Skills for AI Agents
 
-This skill provides comprehensive go-zero microservices framework knowledge, optimized for AI agents helping developers build production-ready services. It covers REST APIs, RPC services, database operations, resilience patterns, and troubleshooting.
+This skill provides comprehensive go-zero microservices framework knowledge, optimized for AI agents helping developers build production-ready services. It covers REST APIs, RPC services, database operations, resilience patterns, high-performance data structures, and troubleshooting.
 
 ## 🎯 When to Use This Skill
 
 Invoke this skill when working with go-zero:
 - **Creating services**: REST APIs, gRPC services, or microservices architectures
 - **Database integration**: SQL, MongoDB, Redis, or connection pooling
+- **Data structures**: LRU Cache, Ring Buffer, TimingWheel, or concurrent maps
 - **Production hardening**: Circuit breakers, rate limiting, or error handling
 - **Debugging**: Understanding errors, fixing configuration, or resolving issues
 - **Learning**: Understanding go-zero patterns and best practices
@@ -72,7 +73,17 @@ This skill organizes go-zero knowledge into focused modules. **Load specific gui
 - Timeout and retry strategies
 - Graceful shutdown and degradation
 
-#### 5. goctl Command Reference
+#### 5. Collection Patterns
+**File**: [references/collection-patterns.md](references/collection-patterns.md)
+**When to load**: Using high-performance data structures, local caching, timeout management
+**Contains**:
+- LRU Cache for local hot data caching (O(1) operations)
+- Ring Buffer for fixed-size circular buffers
+- TimingWheel for efficient timer management (O(1) add/remove/execute)
+- SafeMap for concurrent-safe map operations
+- Memory management best practices and pitfalls
+
+#### 6. goctl Command Reference
 **File**: [references/goctl-commands.md](references/goctl-commands.md)
 **When to load**: Generating code with goctl, setting up new services, post-generation steps
 **Contains**:
@@ -84,11 +95,11 @@ This skill organizes go-zero knowledge into focused modules. **Load specific gui
 - Middleware and error handler templates
 - API spec patterns (CRUD, JWT, mixed auth)
 
-#### 6. Swagger / OpenAPI Documentation
+#### 7. Swagger / OpenAPI Documentation
 **File**: [references/swagger-patterns.md](references/swagger-patterns.md)
 **When to load**: Generating Swagger/OpenAPI docs from `.api` files, adding API documentation annotations
 **Contains**:
-- Built-in `goctl api swagger` command reference (goctl ≥ 1.8.2, no plugin needed)
+- Built-in `goctl api swagger` command reference (goctl ≥ 1.8.4, no plugin needed)
 - `info` block metadata: title, description, host, basePath, schemes, useDefinitions, wrapCodeMsg
 - `@server` tags for Swagger UI grouping
 - `@doc` for endpoint summary/description
@@ -96,6 +107,44 @@ This skill organizes go-zero knowledge into focused modules. **Load specific gui
 - Security definitions (`securityDefinitionsFromJson` + `authType`)
 - Business error codes (`bizCodeEnumDescription`)
 - Complete multi-file `.api` structure example with best practices
+
+#### 8. Distributed Transaction Patterns
+**File**: [references/distributed-transactions.md](references/distributed-transactions.md)
+**When to load**: Cross-service data consistency, DTM integration, SAGA/TCC patterns
+**Contains**:
+- Pattern-selection guidance for Workflow, Saga, TCC, XA, two-phase message, and outbox
+- Verified DTM HTTP Saga skeleton
+- Barrier, idempotency, compensation, security, and failure-testing checklists
+
+#### 9. Observability Patterns
+**File**: [references/observability.md](references/observability.md)
+**When to load**: Production monitoring, tracing, alerting setup
+**Contains**:
+- Prometheus metrics configuration
+- Custom metrics implementation
+- Distributed tracing with OpenTelemetry/Jaeger
+- Structured logging with logx
+- Grafana dashboards and alerting rules
+- ELK integration for log aggregation
+
+#### 10. Message Queue Patterns
+**File**: [references/message-queue.md](references/message-queue.md)
+**When to load**: Async processing, delayed tasks, event streaming
+**Contains**:
+- go-queue dq (Beanstalkd) for delayed tasks
+- go-queue kq (Kafka) for high-throughput messaging
+- Current producer and consumer APIs
+- Lifecycle, retry, idempotency, and shutdown guidance
+
+#### 11. Advanced Components
+**File**: [references/advanced-components.md](references/advanced-components.md)
+**When to load**: Performance optimization, concurrent processing, caching
+**Contains**:
+- Bloom filter for cache penetration prevention
+- TimingWheel for delayed task scheduling
+- MapReduce for parallel processing
+- Executors for batch task buffering
+- SharedCalls (SingleFlight) for duplicate prevention
 
 ### Supporting Resources
 
@@ -113,6 +162,16 @@ This skill organizes go-zero knowledge into focused modules. **Load specific gui
 **File**: [getting-started/claude-code-guide.md](getting-started/claude-code-guide.md)
 **When to load**: Setting up Claude Code for zero-skills usage
 **Contains**: Installation, invocation methods, advanced features (subagents, dynamic context)
+
+#### Design Principles
+**File**: [design/principles.md](design/principles.md)
+**When to load**: Understanding framework philosophy, architecture decisions
+**Contains**: Three-layer architecture rationale, design decisions, performance considerations, anti-patterns
+
+#### Case Study: go-zero-looklook
+**File**: [examples/case-studies/looklook-overview.md](examples/case-studies/looklook-overview.md)
+**When to load**: Learning from production-scale example, real-world architecture
+**Contains**: Source-grounded repository map, study workflow, reusable patterns, and verification checklist
 
 #### Tool Integration Guides
 **File**: [getting-started/README.md](getting-started/README.md)
@@ -178,6 +237,21 @@ These workflows guide you through typical go-zero development tasks:
 
 **Detailed guide**: [references/swagger-patterns.md](references/swagger-patterns.md)
 
+### Using High-Performance Data Structures
+
+**Steps:**
+1. Choose appropriate data structure based on use case:
+   - LRU Cache for local hot data caching
+   - Ring Buffer for fixed-size log/message buffers
+   - TimingWheel for timeout/delayed task management
+   - SafeMap for concurrent-safe key-value storage
+2. Import from `github.com/zeromicro/go-zero/core/collection`
+3. Configure capacity/parameters based on memory constraints
+4. Handle eviction callbacks for resource cleanup (LRU Cache)
+5. Monitor memory usage and rebuild when necessary (SafeMap)
+
+**Detailed guide**: [references/collection-patterns.md](references/collection-patterns.md)
+
 ## ⚡ Key Principles
 
 When generating or reviewing go-zero code, always apply these principles:
@@ -220,8 +294,31 @@ Follow this path based on your needs:
 2. **Add resilience**: [references/resilience-patterns.md](references/resilience-patterns.md)
    Circuit breakers, rate limiting, graceful degradation
 
-3. **Check common pitfalls**: [troubleshooting/common-issues.md](troubleshooting/common-issues.md)
+3. **Optimize data structures**: [references/collection-patterns.md](references/collection-patterns.md)
+   LRU Cache, Ring Buffer, TimingWheel for performance
+
+4. **Check common pitfalls**: [troubleshooting/common-issues.md](troubleshooting/common-issues.md)
    Avoid typical mistakes and know how to debug issues
+
+5. **Set up observability**: [references/observability.md](references/observability.md)
+   Prometheus metrics, distributed tracing, structured logging
+
+### 🔴 Advanced scenarios?
+
+1. **Distributed transactions**: [references/distributed-transactions.md](references/distributed-transactions.md)
+   DTM integration, SAGA/TCC patterns, data consistency
+
+2. **Message queues**: [references/message-queue.md](references/message-queue.md)
+   go-queue for async processing, delayed tasks, Kafka integration
+
+3. **Performance optimization**: [references/advanced-components.md](references/advanced-components.md)
+   Bloom filter, MapReduce, TimingWheel, SharedCalls
+
+4. **Understand design**: [design/principles.md](design/principles.md)
+   Framework philosophy, architecture decisions, anti-patterns
+
+5. **Learn from examples**: [examples/case-studies/looklook-overview.md](examples/case-studies/looklook-overview.md)
+   Production-scale architecture, real-world patterns
 
 ### 🔵 Extending capabilities?
 
@@ -259,8 +356,8 @@ See [getting-started/claude-code-guide.md](getting-started/claude-code-guide.md)
 
 ## 📝 Version Compatibility
 
-- **Target version**: go-zero 1.5+
-- **Go version**: Go 1.19 or later recommended
+- **Stable target**: go-zero v1.10.3 (Go 1.24 or later required)
+- **Master compatibility**: Use Go 1.25 or later when testing against the go-zero `master` branch
 - **Updates**: Patterns updated regularly to reflect framework evolution
 - **Breaking changes**: Check official docs for API changes between versions
 

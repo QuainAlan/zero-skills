@@ -610,7 +610,7 @@ func (l *CreateUserLogic) CreateUser(req *types.CreateUserRequest) (*types.Creat
 ### ✅ JWT Authentication
 
 ```go
-import "github.com/golang-jwt/jwt/v4"
+import "github.com/golang-jwt/jwt/v5"
 
 func generateToken(userId int64, secret string, expire int64) (string, error) {
     now := time.Now().Unix()
@@ -627,8 +627,11 @@ func generateToken(userId int64, secret string, expire int64) (string, error) {
 
 func validateToken(tokenString, secret string) (int64, error) {
     token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+        if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+            return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+        }
         return []byte(secret), nil
-    })
+    }, jwt.WithValidMethods([]string{"HS256"}))
 
     if err != nil || !token.Valid {
         return 0, errors.New("invalid token")
@@ -639,7 +642,12 @@ func validateToken(tokenString, secret string) (int64, error) {
         return 0, errors.New("invalid claims")
     }
 
-    userId := int64(claims["userId"].(float64))
+    userIdValue, ok := claims["userId"].(float64)
+    if !ok {
+        return 0, errors.New("invalid userId claim")
+    }
+
+    userId := int64(userIdValue)
     return userId, nil
 }
 ```
@@ -674,7 +682,7 @@ filePath := filepath.Clean(req.FilePath)  // ✅
 
 ```dockerfile
 # Dockerfile
-FROM golang:1.21-alpine AS builder
+FROM golang:1.25-alpine AS builder
 
 WORKDIR /app
 COPY go.mod go.sum ./

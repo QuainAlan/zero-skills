@@ -10,7 +10,7 @@ Skills are folders of instructions, scripts, and resources that AI agents discov
 
 ## Purpose
 
-This skill enables AI agents (Claude, GitHub Copilot, Cursor, etc.) to:
+This skill enables AI agents (Claude, Codex, GitHub Copilot, Cursor, etc.) to:
 - Generate accurate go-zero code following framework conventions
 - Understand the three-layer architecture (Handler → Logic → Model)
 - Apply best practices for microservices development
@@ -45,6 +45,7 @@ zero-skills/
 ├── getting-started/            # Getting started guides
 │   ├── README.md               # Tool comparison overview
 │   ├── claude-code-guide.md    # Claude Code (recommended)
+│   ├── codex-guide.md          # OpenAI Codex
 │   ├── cursor-guide.md         # Cursor IDE
 │   ├── copilot-guide.md        # GitHub Copilot
 │   └── windsurf-guide.md       # Windsurf IDE
@@ -115,6 +116,17 @@ Add to `claude_desktop_config.json`:
 }
 ```
 
+### With Codex
+
+Codex natively supports Agent Skills. Install this repository for the current project:
+
+```bash
+mkdir -p .agents/skills
+git clone https://github.com/zeromicro/zero-skills.git .agents/skills/zero-skills
+```
+
+Then run `/skills` to verify the installation, or invoke it explicitly with `$zero-skills`. See the [Codex guide](getting-started/codex-guide.md) for project-level, personal, and submodule installation options.
+
 ### With GitHub Copilot
 
 See [copilot-guide.md](getting-started/copilot-guide.md) for detailed setup. Quick start:
@@ -161,7 +173,7 @@ The AI runs `goctl` directly in the terminal for code generation — no separate
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                     AI Assistant                            │
-│  (Claude Code, GitHub Copilot, Cursor, Windsurf)           │
+│  (Claude Code, Codex, GitHub Copilot, Cursor, Windsurf)    │
 └────────────┬─────────────────────┬──────────────────────────┘
              │                     │
              ├─ Workflow Layer ────┤
@@ -206,6 +218,7 @@ See [Getting Started Guides](getting-started/) for detailed integration instruct
 **Getting Started Guides:**
 
 - 💡 **[Claude Code](getting-started/claude-code-guide.md)** - Full features, subagents (recommended)
+- 🧩 **[Codex](getting-started/codex-guide.md)** - Native skill integration for CLI and IDE
 - 🖱️ **[Cursor](getting-started/cursor-guide.md)** - IDE integration with .cursorrules
 - 🤖 **[GitHub Copilot](getting-started/copilot-guide.md)** - VS Code inline suggestions
 - 🏄 **[Windsurf](getting-started/windsurf-guide.md)** - Cascade AI integration

@@ -10,7 +10,7 @@ Skills 是包含指令、脚本和资源的文件夹，AI 智能体可以动态�
 
 ## 目标
 
-本 skill 使 AI 助手（Claude、GitHub Copilot、Cursor 等）能够：
+本 skill 使 AI 助手（Claude、Codex、GitHub Copilot、Cursor 等）能够：
 - 生成符合 go-zero 规范的准确代码
 - 理解三层架构（Handler → Logic → Model）
 - 应用微服务开发最佳实践
@@ -45,6 +45,7 @@ zero-skills/
 ├── getting-started/            # 快速开始指南
 │   ├── README.md               # 工具对比概览
 │   ├── claude-code-guide.md    # Claude Code（推荐）
+│   ├── codex-guide.md          # OpenAI Codex
 │   ├── cursor-guide.md         # Cursor IDE
 │   ├── copilot-guide.md        # GitHub Copilot
 │   └── windsurf-guide.md       # Windsurf IDE
@@ -115,6 +116,17 @@ git clone https://github.com/zeromicro/zero-skills.git ~/.claude/skills/zero-ski
 }
 ```
 
+### 在 Codex 中使用
+
+Codex 原生支持 Agent Skills。为当前项目安装本仓库：
+
+```bash
+mkdir -p .agents/skills
+git clone https://github.com/zeromicro/zero-skills.git .agents/skills/zero-skills
+```
+
+然后运行 `/skills` 验证安装，或使用 `$zero-skills` 显式调用。项目级、个人级和 Git Submodule 安装方式详见 [Codex 指南](getting-started/codex-guide.md)。
+
 ### 在 GitHub Copilot 中使用
 
 参见 [copilot-guide.md](getting-started/copilot-guide.md) 获取详细设置。快速开始：
@@ -161,7 +173,7 @@ AI 在终端中直接运行 `goctl` 生成代码——无需额外工具或服�
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                     AI 助手                                  │
-│  (Claude Code, GitHub Copilot, Cursor, Windsurf)           │
+│  (Claude Code, Codex, GitHub Copilot, Cursor, Windsurf)    │
 └────────────┬─────────────────────┬──────────────────────────┘
              │                     │
              ├─ 工作流层 ──────────┤
@@ -206,6 +218,7 @@ AI 在终端中直接运行 `goctl` 生成代码——无需额外工具或服�
 **入门指南：**
 
 - 💡 **[Claude Code](getting-started/claude-code-guide.md)** - 完整功能，子代理（推荐）
+- 🧩 **[Codex](getting-started/codex-guide.md)** - CLI 和 IDE 的原生 skill 集成
 - 🖱️ **[Cursor](getting-started/cursor-guide.md)** - IDE 集成 .cursorrules
 - 🤖 **[GitHub Copilot](getting-started/copilot-guide.md)** - VS Code 内联建议
 - 🏄 **[Windsurf](getting-started/windsurf-guide.md)** - Cascade AI 集成

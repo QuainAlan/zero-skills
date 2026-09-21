@@ -10,18 +10,18 @@ This directory contains guides for using zero-skills with different AI coding to
 | **Cursor** | [cursor-guide.md](cursor-guide.md) | Via rules | IDE integration, fast responses |
 | **GitHub Copilot** | [copilot-guide.md](copilot-guide.md) | Via instructions | VS Code users, inline suggestions |
 | **Windsurf** | [windsurf-guide.md](windsurf-guide.md) | Via rules | IDE integration, Cascade AI |
-| **Codex** | [codex-guide.md](codex-guide.md) | Via AGENTS.md | CLI-based agentic coding tasks |
+| **Codex** | [codex-guide.md](codex-guide.md) | Native | CLI and IDE agentic coding tasks |
 
 ## Feature Comparison
 
 | Feature | Claude Code | Cursor | Copilot | Windsurf | Codex |
 |---------|-------------|--------|---------|----------|-------|
-| Native skills support | Yes | No | No | No | No |
-| YAML frontmatter | Yes | No | No | No | No |
+| Native skills support | Yes | No | No | No | Yes |
+| YAML frontmatter | Yes | No | No | No | Yes |
 | Subagent workflows | Yes | No | No | No | No |
 | Dynamic context (`!cmd`) | Yes | No | No | No | No |
 | Project rules | `.claude/` | `.cursorrules` | `.github/` | `.windsurfrules` | `AGENTS.md` |
-| Auto-load by file type | Yes | Manual | Manual | Manual | Manual |
+| Automatic skill selection | Yes | Manual | Manual | Manual | Yes |
 | Tool restrictions | Yes | No | No | No | No |
 
 ## Quick Comparison
@@ -88,14 +88,14 @@ This directory contains guides for using zero-skills with different AI coding to
 
 **Pros:**
 - CLI-based agentic coding
+- Native Agent Skills support
+- Automatic or explicit (`$zero-skills`) invocation
 - Reads `AGENTS.md` automatically
 - Good at multi-file tasks
 - Backed by OpenAI models
 
 **Cons:**
-- No native skills support
-- No automatic skill loading by file type
-- Manual file references needed
+- Requires a current Codex CLI or IDE extension
 
 **Best for:** Developers who prefer a CLI-based AI coding agent.
 
@@ -117,7 +117,9 @@ Then configure based on your tool:
 | Claude Code | Clone to `.claude/skills/zero-skills/` |
 | Cursor | Reference in `.cursorrules` |
 | Copilot | Reference in `.github/copilot-instructions.md` |
-| Windsurf | Reference in `.windsurfrules` || Codex | Reference in `AGENTS.md` |
+| Windsurf | Reference in `.windsurfrules` |
+| Codex | Clone to `.agents/skills/zero-skills/` |
+
 ## Key Principles (All Tools)
 
 Regardless of which tool you use, these go-zero principles apply:

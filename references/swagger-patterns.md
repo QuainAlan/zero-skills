@@ -2,9 +2,9 @@
 
 ## Overview
 
-goctl (≥ 1.8.2) has a **built-in** `api swagger` subcommand that generates OpenAPI 2.0 (Swagger) JSON/YAML directly from `.api` files. No external plugin required.
+goctl (≥ 1.8.4) has a **built-in** `api swagger` subcommand that generates OpenAPI 2.0 (Swagger) JSON/YAML directly from `.api` files. No external plugin required.
 
-> **Important**: For goctl < 1.8.2, the older `goctl-swagger` plugin approach was needed. Since 1.8.2+, always use the built-in command.
+> **Important**: For goctl < 1.8.4, use the older `goctl-swagger` plugin or upgrade. Since 1.8.4, prefer the built-in command.
 
 ## Command Reference
 
@@ -23,10 +23,10 @@ Flags:
 
 ```bash
 # Generate JSON (default)
-goctl api swagger --api api/entry.api --dir docs/swagger --filename aipivot
+goctl api swagger --api api/entry.api --dir docs/swagger --filename my-api
 
 # Generate YAML
-goctl api swagger --api api/entry.api --dir docs/swagger --filename aipivot --yaml
+goctl api swagger --api api/entry.api --dir docs/swagger --filename my-api --yaml
 ```
 
 ### Makefile Integration
@@ -34,13 +34,13 @@ goctl api swagger --api api/entry.api --dir docs/swagger --filename aipivot --ya
 ```makefile
 swagger:
 	@mkdir -p docs/swagger
-	goctl api swagger --api api/entry.api --dir docs/swagger --filename aipivot
-	@echo "Swagger doc generated: docs/swagger/aipivot.json"
+	goctl api swagger --api api/entry.api --dir docs/swagger --filename my-api
+	@echo "Swagger doc generated: docs/swagger/my-api.json"
 ```
 
 ## `.api` File Swagger Annotations
 
-All swagger metadata is driven by the `.api` file. The following sections document every annotation recognized by `goctl api swagger`.
+Swagger metadata is driven by the `.api` file. The following sections cover the annotations most commonly used with `goctl api swagger`.
 
 ### info Block — Document Metadata
 
@@ -101,8 +101,6 @@ When `true`, all responses are wrapped in a unified code-msg envelope:
   "data": { ... }
 }
 ```
-
-> Note: Boolean syntax (`true`/`false`) requires goctl ≥ 1.8.4. For older versions use string form: `wrapCodeMsg: "true"`.
 
 ### @server Block — Route Group Configuration
 
@@ -366,21 +364,21 @@ service my-api {
 
 ### ❌ DON'T
 
-- Use the old `goctl-swagger` plugin with goctl ≥ 1.8.2 (it's now built-in)
+- Use the old `goctl-swagger` plugin with goctl ≥ 1.8.4 (the command is built in)
 - Put global swagger metadata in sub-module `.api` files (only `entry.api` info is used)
 - Mix `useDefinitions: true` with per-endpoint `bizCodeEnumDescription` (they conflict)
 - Forget to add `example` tags — Swagger UI without examples is hard to use
-- Hard-code host/basePath — consider environment-specific overrides
+- Publish a `host` or `basePath` that does not match the environment where the generated document will be used
 
 ## Troubleshooting
 
 ### "swagger" subcommand not found
 
-Your goctl version is < 1.8.2. Upgrade:
+Your goctl version is < 1.8.4. Upgrade:
 
 ```bash
 go install github.com/zeromicro/go-zero/tools/goctl@latest
-goctl --version  # should be >= 1.8.2
+goctl --version  # should be >= 1.8.4
 ```
 
 ### Comments not appearing in swagger
@@ -388,14 +386,3 @@ goctl --version  # should be >= 1.8.2
 - Field comments must be `//` style on the same line or above the field
 - Type comments must be `// TypeName description` directly above the type definition
 - The comment text maps to `description` in the swagger property
-
-### Boolean values not working in info block
-
-Boolean syntax (`true`/`false` without quotes) requires goctl ≥ 1.8.4. For older versions:
-
-```go
-info (
-    useDefinitions: "true"   // string form for goctl < 1.8.4
-    wrapCodeMsg:    "true"
-)
-```
