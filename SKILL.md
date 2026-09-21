@@ -1,6 +1,6 @@
 ---
 name: zero-skills
-description: This skill should be used when the user asks to "create a go-zero API", "build a REST service with go-zero", "generate code with goctl", "add middleware to go-zero", "implement a gRPC service", "set up service discovery", "add circuit breaker or rate limiting", "use go-zero database model or collection data structures", "troubleshoot go-zero errors", or is working with go-zero microservices, .api files, .proto files, or a go.mod containing github.com/zeromicro/go-zero.
+description: Use when building, reviewing, or troubleshooting go-zero services, including REST and RPC code generation, middleware, service discovery, database models, collection data structures, resilience, observability, distributed transactions, and message queues. Trigger for goctl, .api or .proto files, or projects importing github.com/zeromicro/go-zero.
 version: 1.0.0
 license: MIT
 allowed-tools:
@@ -95,6 +95,44 @@ This skill organizes go-zero knowledge into focused modules. **Load specific gui
 - Middleware and error handler templates
 - API spec patterns (CRUD, JWT, mixed auth)
 
+#### 7. Distributed Transaction Patterns
+**File**: [references/distributed-transactions.md](references/distributed-transactions.md)
+**When to load**: Cross-service data consistency, DTM integration, SAGA/TCC patterns
+**Contains**:
+- Pattern-selection guidance for Workflow, Saga, TCC, XA, two-phase message, and outbox
+- Verified DTM HTTP Saga skeleton
+- Barrier, idempotency, compensation, security, and failure-testing checklists
+
+#### 8. Observability Patterns
+**File**: [references/observability.md](references/observability.md)
+**When to load**: Production monitoring, tracing, alerting setup
+**Contains**:
+- Prometheus metrics configuration
+- Custom metrics implementation
+- Distributed tracing with OpenTelemetry/Jaeger
+- Structured logging with logx
+- Grafana dashboards and alerting rules
+- ELK integration for log aggregation
+
+#### 9. Message Queue Patterns
+**File**: [references/message-queue.md](references/message-queue.md)
+**When to load**: Async processing, delayed tasks, event streaming
+**Contains**:
+- go-queue dq (Beanstalkd) for delayed tasks
+- go-queue kq (Kafka) for high-throughput messaging
+- Current producer and consumer APIs
+- Lifecycle, retry, idempotency, and shutdown guidance
+
+#### 10. Advanced Components
+**File**: [references/advanced-components.md](references/advanced-components.md)
+**When to load**: Performance optimization, concurrent processing, caching
+**Contains**:
+- Bloom filter for cache penetration prevention
+- TimingWheel for delayed task scheduling
+- MapReduce for parallel processing
+- Executors for batch task buffering
+- SharedCalls (SingleFlight) for duplicate prevention
+
 ### Supporting Resources
 
 #### Best Practices
@@ -111,6 +149,16 @@ This skill organizes go-zero knowledge into focused modules. **Load specific gui
 **File**: [getting-started/claude-code-guide.md](getting-started/claude-code-guide.md)
 **When to load**: Setting up Claude Code for zero-skills usage
 **Contains**: Installation, invocation methods, advanced features (subagents, dynamic context)
+
+#### Design Principles
+**File**: [design/principles.md](design/principles.md)
+**When to load**: Understanding framework philosophy, architecture decisions
+**Contains**: Three-layer architecture rationale, design decisions, performance considerations, anti-patterns
+
+#### Case Study: go-zero-looklook
+**File**: [examples/case-studies/looklook-overview.md](examples/case-studies/looklook-overview.md)
+**When to load**: Learning from production-scale example, real-world architecture
+**Contains**: Source-grounded repository map, study workflow, reusable patterns, and verification checklist
 
 #### Tool Integration Guides
 **File**: [getting-started/README.md](getting-started/README.md)
@@ -227,6 +275,26 @@ Follow this path based on your needs:
 
 4. **Check common pitfalls**: [troubleshooting/common-issues.md](troubleshooting/common-issues.md)
    Avoid typical mistakes and know how to debug issues
+
+5. **Set up observability**: [references/observability.md](references/observability.md)
+   Prometheus metrics, distributed tracing, structured logging
+
+### 🔴 Advanced scenarios?
+
+1. **Distributed transactions**: [references/distributed-transactions.md](references/distributed-transactions.md)
+   DTM integration, SAGA/TCC patterns, data consistency
+
+2. **Message queues**: [references/message-queue.md](references/message-queue.md)
+   go-queue for async processing, delayed tasks, Kafka integration
+
+3. **Performance optimization**: [references/advanced-components.md](references/advanced-components.md)
+   Bloom filter, MapReduce, TimingWheel, SharedCalls
+
+4. **Understand design**: [design/principles.md](design/principles.md)
+   Framework philosophy, architecture decisions, anti-patterns
+
+5. **Learn from examples**: [examples/case-studies/looklook-overview.md](examples/case-studies/looklook-overview.md)
+   Production-scale architecture, real-world patterns
 
 ### 🔵 Extending capabilities?
 
